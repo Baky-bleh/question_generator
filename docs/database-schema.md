@@ -1,9 +1,8 @@
 # Database Schema
 
-> Last synced: Phase 1 (Backend Core) — 2026-03-05
+> Last synced: 2026-03-06 by doc-sync agent
 > Engine: PostgreSQL 16 (hosted on Supabase)
 > ORM: SQLAlchemy 2.0 (async) + Alembic migrations
-> Migration: `api/alembic/versions/001_initial_schema.py`
 
 ## Schema Rules
 - All tables using `TimestampMixin` include `id` (UUID v4 PK), `created_at` (server_default=now()), `updated_at` (server_default=now(), onupdate=now())
@@ -53,7 +52,7 @@ Active refresh tokens for revocation support. Source: `src/auth/models.py`
 | user_id | UUID | FK -> users, INDEX, NOT NULL | |
 | token_hash | VARCHAR(255) | UNIQUE, NOT NULL | SHA-256 of token |
 | expires_at | TIMESTAMP | NOT NULL | |
-| revoked_at | TIMESTAMP | NULLABLE | Set on logout |
+| revoked_at | TIMESTAMP | NULLABLE | Set on logout or rotation |
 | device_info | VARCHAR(500) | NULLABLE | User agent string |
 | created_at | TIMESTAMP | NOT NULL | Via TimestampMixin |
 | updated_at | TIMESTAMP | NOT NULL | Via TimestampMixin |
@@ -201,11 +200,15 @@ Unique constraint: `(user_id, achievement_type)` — name `uq_user_achievement`
 
 | Key Pattern | Type | TTL | Purpose |
 |-------------|------|-----|---------|
-| `streak:{user_id}` | Hash | None | `{count, last_date, freeze_remaining}` |
-| `leaderboard:weekly:{league}` | Sorted Set | Reset Monday 00:00 UTC | Weekly XP rankings |
-| `features:{user_id}` | Hash | 5 min | `{show_ads, has_premium, streak_freeze}` |
-| `session:{token_jti}` | String | 15 min | Active session validation |
-| `rate_limit:auth:{ip}` | String + INCR | 15 min | Auth endpoint rate limiting |
+| `streak:{user_id}` | Hash | None | `{count, longest, last_date, freeze_remaining, today_completed}` |
+| `rate_limit:auth:{ip}` | String + INCR | 15 min (900s) | Auth endpoint rate limiting (max 10 per window) |
+
+**Not yet implemented** (planned for future phases):
+| Key Pattern | Type | TTL | Purpose |
+|-------------|------|-----|---------|
+| `leaderboard:weekly:{league}` | Sorted Set | Reset Monday 00:00 UTC | Weekly XP rankings (Phase 5) |
+| `features:{user_id}` | Hash | 5 min | `{show_ads, has_premium, streak_freeze}` (Phase 4) |
+| `session:{token_jti}` | String | 15 min | Active session validation (not implemented) |
 
 ---
 

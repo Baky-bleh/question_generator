@@ -1,6 +1,6 @@
 # Phase Status
 
-> Last synced: Phase 1 (Backend Core) — 2026-03-05
+> Last synced: 2026-03-06 by doc-sync agent
 > This document tracks what's built, what's in progress, and what's next.
 > New agents: READ THIS FIRST to understand the current state of the project.
 
@@ -38,80 +38,82 @@
 
 ### Acceptance Criteria
 
-- [x] All core API endpoints implemented: Auth (5), Courses (3), Lessons (2), Progress (3), SRS (2), Streaks (1) = 16 endpoints
+- [x] All core API endpoints implemented: Auth (5), Users (2), Courses (3), Lessons (2), Progress (3), SRS (2), Streaks (1) = 18 endpoints
 - [x] Server-side exercise answer validation for all 6 exercise types (multiple_choice, fill_blank, matching, listening, word_arrange, translation)
 - [x] JWT auth with refresh token rotation
 - [x] Google + Apple OAuth2 login (via id_token verification)
 - [x] SRS (SM-2) algorithm produces correct intervals
-- [x] Streak system with timezone-aware tracking
+- [x] Streak system with timezone-aware tracking and auto-freeze consumption
 - [x] XP calculation with base + bonus (perfect, streak, speed)
-- [x] Integration tests for all modules (17 test files, ~180 tests passing)
-- [x] Alembic migration (`001_initial_schema.py`) creates all 11 tables
+- [x] Tests for all modules (17 test files)
+- [x] Alembic migrations (`001_initial_schema.py`, `002_add_daily_goal_to_users.py`)
 - [x] Docker Compose starts full backend stack
 - [ ] OpenAPI spec auto-generates (FastAPI built-in, not explicitly tested)
 
 ### What Was Built
 
 **Infrastructure** (`src/core/`):
-- `config.py` — Settings via pydantic-settings (DB, Redis, JWT, S3, OAuth, Content)
+- `config.py` — Settings via pydantic-settings (DB, Redis, JWT, S3, OAuth, Content, App)
 - `database.py` — Async SQLAlchemy engine, session factory, `Base`, `TimestampMixin`
-- `redis.py` — Redis connection
-- `deps.py` — FastAPI dependency injection (get_db, get_redis, get_settings)
-- `exceptions.py` — `AppException` + handler
-- `middleware.py` — CORS setup, request ID middleware
-- `main.py` — App factory, router registration
+- `redis.py` — Redis connection (async, decode_responses=True)
+- `deps.py` — FastAPI dependency injection (get_db, get_redis, get_settings, get_user_features stub)
+- `exceptions.py` — `AppException` hierarchy (NotFoundError, ConflictError, UnauthorizedError, ForbiddenError, ValidationError)
+- `middleware.py` — CORS setup, request ID middleware (X-Request-ID header)
+- `main.py` — App factory with dynamic router registration, static content mount
 
 **Auth** (`src/auth/`):
 - `models.py` — User, UserAuthProvider, RefreshToken
-- `schemas.py` — RegisterRequest, LoginRequest, RefreshRequest, LogoutRequest, OAuthRequest, TokenResponse, RefreshResponse
-- `service.py` — register, authenticate, refresh_token, revoke_token, oauth_login
-- `deps.py` — get_current_user dependency
-- `router.py` — 5 endpoints (register, login, refresh, logout, oauth)
+- `schemas.py` — RegisterRequest, LoginRequest, RefreshRequest, LogoutRequest, OAuthRequest, TokenResponse, RefreshResponse, UserProfileResponse, UserUpdateRequest
+- `security.py` — bcrypt password hashing, JWT (HS256) creation/verification, SHA-256 token hashing
+- `service.py` — register, authenticate, refresh_token (with rotation), revoke_token, oauth_login (Google/Apple)
+- `deps.py` — get_current_user dependency (Bearer token -> JWT decode -> DB lookup)
+- `router.py` — 7 endpoints: register, login, refresh, logout, oauth/{provider}, GET /users/me, PATCH /users/me
 
 **Courses** (`src/courses/`):
 - `models.py` — Course
 - `schemas.py` — CourseOut, CourseListResponse, CourseDetailResponse, EnrollResponse, UnitOut, LessonSummaryOut, EnrollmentOut
-- `service.py` — list_courses, get_course_detail, enroll
+- `service.py` — list_courses (published only), get_course_detail (with progress merge from manifest), enroll
 - `router.py` — 3 endpoints (list, detail, enroll)
 
 **Lessons** (`src/lessons/`):
-- `content_loader.py` — Load lesson JSON from filesystem/S3
+- `content_loader.py` — Load manifest and lesson JSON from local filesystem (S3-ready design)
 - `schemas.py` — LessonOut, ExerciseSubmitRequest, ExerciseSubmitResponse
-- `service.py` — get_lesson, submit_answer
+- `service.py` — get_lesson (returns content_url), submit_answer (validates via type-specific validators)
 - `router.py` — 2 endpoints (get lesson, submit exercise)
-- `validators/` — 6 exercise type validators (multiple_choice, fill_blank, matching, listening, word_arrange, translation)
+- `validators/` — 6 exercise type validators: multiple_choice, fill_blank, matching, listening, word_arrange, translation. Each returns `ValidatorResult(correct, correct_answer, explanation)`.
 
 **Progress** (`src/progress/`):
 - `models.py` — UserCourseEnrollment, LessonCompletion, XPEvent, Achievement
-- `schemas.py` — LessonCompleteRequest/Response, ProgressSummaryResponse, CourseProgressResponse
-- `xp.py` — XP calculation engine (base + perfect + streak + speed bonuses)
-- `service.py` — complete_lesson, get_progress_summary, get_course_progress
+- `schemas.py` — LessonCompleteRequest/Response, ProgressSummaryResponse, CourseProgressResponse, TodayStats, CourseProgressSummary, NextLesson, StreakInfo
+- `xp.py` — XP calculation engine: base=10, perfect_bonus=5, streak_bonus=0-7, speed_bonus=0-3
+- `service.py` — complete_lesson (creates completion + XP event + streak check-in + enrollment advance), get_progress_summary, get_course_progress
 - `router.py` — 3 endpoints (complete lesson, progress summary, course progress)
 
 **SRS** (`src/srs/`):
 - `models.py` — SRSItem
 - `schemas.py` — ReviewItemOut, ReviewNextResponse, ReviewSubmitRequest, ReviewSubmitResponse
-- `service.py` — get_due_items, submit_review (SM-2 algorithm)
+- `sm2.py` — SM-2 algorithm (quality 0-5, ease factor, interval, repetitions)
+- `service.py` — get_due_items (ordered by next_review_at), submit_review (SM-2 update)
 - `router.py` — 2 endpoints (next items, submit review)
 
 **Streaks** (`src/streaks/`):
 - `models.py` — Streak
 - `schemas.py` — StreakResponse
-- `service.py` — get_streak, record_activity (timezone-aware)
+- `service.py` — get_streak (Redis-first, DB fallback), check_in (timezone-aware, auto-freeze consumption on 1-day gap)
 - `router.py` — 1 endpoint (get my streak)
 
 **Subscriptions** (`src/subscriptions/`):
 - `models.py` — Subscription (model only, no API yet)
 
 **Rate Limiting** (`src/middleware/`):
-- `rate_limit.py` — Redis-based auth endpoint rate limiting
+- `rate_limit.py` — Redis-based auth endpoint rate limiting (10 req / 15 min per IP)
 
 **Content Pipeline** (`content/`):
 - `build.py` — Content build and validation script
 - `schemas/` — 7 JSON schemas for exercise types + course manifest
-- `courses/es-en/` — Sample Spanish course: 2 units, 10 lessons, ~60 exercises
+- `courses/es-en/` — Sample Spanish course: 2 units, 10 lessons (5 per unit)
 
-**Tests** (`tests/`):
+**Tests** (`api/tests/`):
 - `test_auth/` — test_security.py, test_service.py, test_rate_limit.py, test_router.py
 - `test_courses/` — test_service.py, test_router.py
 - `test_lessons/` — test_validators.py, test_service.py, test_router.py
@@ -202,5 +204,6 @@
 
 | Date | Phase | Agent | Change Summary |
 |------|-------|-------|---------------|
+| 2026-03-06 | 1 | Doc Sync | Re-synced all docs after Phase 1 completion. 18 API endpoints, 11 DB tables, 6 exercise validators, 17 test files. Corrected error response format, Redis data structures, endpoint count. |
 | 2026-03-05 | 1 | Doc Sync | Phase 1 complete: 16 API endpoints, 11 DB models, 6 exercise validators, 17 test files (~180 tests). All core backend services built. |
 | 2026-03-05 | 0 | Setup | Initial project documentation created |

@@ -1,6 +1,6 @@
 # API Contracts
 
-> Last synced: Phase 1 (Backend Core) — 2026-03-05
+> Last synced: 2026-03-06 by doc-sync agent
 > This document is the source of truth for all API endpoints.
 > Mobile and Web teams: read this before writing any API call.
 > Backend team: update this (via CHANGELOG_ENTRY) when adding/changing endpoints.
@@ -62,7 +62,7 @@ Login with email/password.
 - **Errors**: `401 invalid credentials`
 
 ### `POST /api/v1/auth/refresh`
-Get new access token using refresh token.
+Get new access token using refresh token. Rotates the old refresh token (revokes it).
 - **Auth**: None
 - **Request** (`RefreshRequest`):
   ```json
@@ -84,6 +84,7 @@ OAuth login (google, apple). Creates account if first login.
   { "id_token": "string" }
   ```
 - **Response** `200` (`TokenResponse`): Same as register response
+- **Errors**: `401 unsupported provider or invalid token`
 
 ### `POST /api/v1/auth/logout`
 Revoke refresh token.
@@ -137,7 +138,7 @@ Update current user's profile. Partial update — only provided fields change.
 Router: `src/courses/router.py` — prefix `/api/v1/courses`
 
 ### `GET /api/v1/courses`
-List all available courses.
+List all published courses.
 - **Auth**: Required
 - **Response** `200` (`CourseListResponse`):
   ```json
@@ -201,7 +202,7 @@ Enroll current user in a course.
   ```json
   { "enrollment_id": "uuid", "enrolled_at": "datetime" }
   ```
-- **Errors**: `409 already enrolled`
+- **Errors**: `404 course not found` | `409 already enrolled`
 
 ---
 
@@ -219,12 +220,12 @@ Get lesson metadata and content URL.
   {
     "id": "string",
     "title": "Greetings",
-    "content_url": "string (S3/local URL to lesson JSON)",
+    "content_url": "string (URL to lesson JSON)",
     "exercise_count": 10,
     "estimated_minutes": 5
   }
   ```
-- **Notes**: `content_url` points to S3 or local content. Client downloads and caches this JSON containing full exercise data.
+- **Notes**: `content_url` points to the lesson JSON file served via static mount or S3. Client downloads and caches this JSON containing full exercise data.
 
 ### `POST /api/v1/lessons/{lesson_id}/submit`
 Submit a single exercise answer for server-side validation.
@@ -248,7 +249,7 @@ Submit a single exercise answer for server-side validation.
     "xp_earned": 2
   }
   ```
-- **Notes**: Server validates answer using exercise-type-specific validators (6 types: multiple_choice, fill_blank, matching, listening, word_arrange, translation).
+- **Notes**: Server validates answer using exercise-type-specific validators (6 types: multiple_choice, fill_blank, matching, listening, word_arrange, translation). XP per correct answer: 2.
 
 ---
 
@@ -292,7 +293,7 @@ Mark lesson as completed. Called after last exercise.
     "next_lesson": { "id": "string", "title": "string" }
   }
   ```
-- **Notes**: XP breakdown includes base (10), perfect_bonus (5 if score==100), streak_bonus (min of streak count, 7), speed_bonus (0-3 based on time ratio).
+- **Notes**: XP breakdown includes base (10), perfect_bonus (5 if score==100), streak_bonus (min of streak count, 7), speed_bonus (0-3 based on time ratio vs 300s expected time).
 
 ### `GET /api/v1/progress/me`
 Get current user's overall progress summary.
@@ -308,6 +309,7 @@ Get current user's overall progress summary.
     "today": { "lessons_completed": 2, "xp_earned": 30, "goal_met": true }
   }
   ```
+- **Notes**: Level = `(total_xp // 100) + 1`. `goal_met` is true if `today.lessons_completed >= 1`.
 
 ### `GET /api/v1/progress/me/course/{course_id}`
 Get detailed progress for a specific course.
@@ -322,10 +324,11 @@ Get detailed progress for a specific course.
     "lessons_completed": 15,
     "lessons_total": 100,
     "total_xp_in_course": 450,
-    "words_learned": 120,
+    "words_learned": 0,
     "time_spent_minutes": 300
   }
   ```
+- **Notes**: `words_learned` is always 0 (not yet tracked). `units_completed` counts distinct completed unit_orders (simplified).
 
 ---
 
@@ -372,6 +375,7 @@ Submit review result for SRS update (SM-2 algorithm).
     "next_review_at": "datetime"
   }
   ```
+- **Errors**: `404 SRS item not found for concept`
 
 ---
 
@@ -412,9 +416,15 @@ The following endpoints from the original design are **not yet built** (planned 
 
 ### Error Response
 ```json
-{ "detail": "Human-readable error message", "code": "MACHINE_READABLE_CODE" }
+{ "detail": "Human-readable error message" }
 ```
-Custom exceptions use `AppException` (defined in `src/core/exceptions.py`).
+Custom exceptions use `AppException` (defined in `src/core/exceptions.py`). Exception types:
+- `NotFoundError` (404)
+- `ConflictError` (409)
+- `UnauthorizedError` (401)
+- `ForbiddenError` (403)
+- `ValidationError` (422)
+- `RateLimitExceeded` (429) — from `src/middleware/rate_limit.py`
 
 ### Standard Status Codes
 | Code | Usage |
@@ -422,7 +432,6 @@ Custom exceptions use `AppException` (defined in `src/core/exceptions.py`).
 | 200 | Success (with body) |
 | 201 | Created |
 | 204 | Success (no body) |
-| 400 | Bad request / business logic error |
 | 401 | Not authenticated |
 | 403 | Authenticated but not authorized |
 | 404 | Resource not found |
