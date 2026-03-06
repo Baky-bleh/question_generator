@@ -1,0 +1,75 @@
+{
+  "id": "es-en-u1-l2",
+  "title": "Introductions",
+  "unit_order": 1,
+  "lesson_order": 2,
+  "exercises": [
+    {
+      "id": "es-en-u1-l2-e1",
+      "type": "multiple_choice",
+      "prompt": "How do you say 'My name is...' in Spanish?",
+      "choices": ["Tengo...", "Me llamo...", "Soy de...", "Estoy..."],
+      "correct_index": 1,
+      "explanation": "'Me llamo' literally means 'I call myself'."
+    },
+    {
+      "id": "es-en-u1-l2-e2",
+      "type": "fill_blank",
+      "prompt": "¿Cómo te ___?",
+      "correct_answers": ["llamas"],
+      "hint": "Asking someone's name",
+      "explanation": "'¿Cómo te llamas?' means 'What is your name?'"
+    },
+    {
+      "id": "es-en-u1-l2-e3",
+      "type": "translation",
+      "prompt": "Nice to meet you",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["Mucho gusto", "Encantado", "Encantada"],
+      "explanation": "'Mucho gusto' is the most common way to say 'Nice to meet you'."
+    },
+    {
+      "id": "es-en-u1-l2-e4",
+      "type": "word_arrange",
+      "prompt": "Translate: 'Where are you from?'",
+      "words": ["eres", "de", "¿Dónde", "?", "tú"],
+      "correct_order": ["¿Dónde", "eres", "de", "?"],
+      "explanation": "'¿De dónde eres?' asks about someone's origin."
+    },
+    {
+      "id": "es-en-u1-l2-e5",
+      "type": "matching",
+      "pairs": [
+        { "left": "Me llamo", "right": "My name is" },
+        { "left": "¿Cómo estás?", "right": "How are you?" },
+        { "left": "Mucho gusto", "right": "Nice to meet you" },
+        { "left": "Soy de", "right": "I am from" }
+      ]
+    },
+    {
+      "id": "es-en-u1-l2-e6",
+      "type": "listening",
+      "audio_url": "audio/es-en/introductions/me_llamo.mp3",
+      "correct_text": "Me llamo María",
+      "acceptable_typos": 1,
+      "explanation": "'Me llamo María' means 'My name is María'."
+    },
+    {
+      "id": "es-en-u1-l2-e7",
+      "type": "multiple_choice",
+      "prompt": "What does '¿Cómo estás?' mean?",
+      "choices": ["What is your name?", "How are you?", "Where are you from?", "How old are you?"],
+      "correct_index": 1,
+      "explanation": "'¿Cómo estás?' is the informal way to ask 'How are you?'"
+    },
+    {
+      "id": "es-en-u1-l2-e8",
+      "type": "fill_blank",
+      "prompt": "Soy ___ Estados Unidos.",
+      "correct_answers": ["de"],
+      "hint": "The word for 'from'",
+      "explanation": "'Soy de' means 'I am from'."
+    }
+  ]
+}

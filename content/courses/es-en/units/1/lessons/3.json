@@ -1,0 +1,75 @@
+{
+  "id": "es-en-u1-l3",
+  "title": "Common Phrases",
+  "unit_order": 1,
+  "lesson_order": 3,
+  "exercises": [
+    {
+      "id": "es-en-u1-l3-e1",
+      "type": "multiple_choice",
+      "prompt": "What does 'Lo siento' mean?",
+      "choices": ["Excuse me", "I'm sorry", "You're welcome", "Of course"],
+      "correct_index": 1,
+      "explanation": "'Lo siento' literally means 'I feel it' and is used to say 'I'm sorry'."
+    },
+    {
+      "id": "es-en-u1-l3-e2",
+      "type": "translation",
+      "prompt": "You're welcome",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["De nada"],
+      "explanation": "'De nada' literally means 'of nothing'."
+    },
+    {
+      "id": "es-en-u1-l3-e3",
+      "type": "fill_blank",
+      "prompt": "Con ___",
+      "correct_answers": ["permiso"],
+      "hint": "Used to say 'Excuse me' when passing someone",
+      "explanation": "'Con permiso' means 'Excuse me' or 'With your permission'."
+    },
+    {
+      "id": "es-en-u1-l3-e4",
+      "type": "matching",
+      "pairs": [
+        { "left": "Lo siento", "right": "I'm sorry" },
+        { "left": "De nada", "right": "You're welcome" },
+        { "left": "Con permiso", "right": "Excuse me" },
+        { "left": "¡Salud!", "right": "Cheers!/Bless you!" }
+      ]
+    },
+    {
+      "id": "es-en-u1-l3-e5",
+      "type": "word_arrange",
+      "prompt": "Translate: 'I don't understand'",
+      "words": ["entiendo", "No", "sé", "yo"],
+      "correct_order": ["No", "entiendo"],
+      "explanation": "'No entiendo' means 'I don't understand'."
+    },
+    {
+      "id": "es-en-u1-l3-e6",
+      "type": "listening",
+      "audio_url": "audio/es-en/phrases/lo_siento.mp3",
+      "correct_text": "Lo siento",
+      "acceptable_typos": 1
+    },
+    {
+      "id": "es-en-u1-l3-e7",
+      "type": "translation",
+      "prompt": "I don't know",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["No sé", "No se"],
+      "explanation": "'No sé' means 'I don't know'."
+    },
+    {
+      "id": "es-en-u1-l3-e8",
+      "type": "multiple_choice",
+      "prompt": "How do you say 'Of course' in Spanish?",
+      "choices": ["Quizás", "Claro", "Nunca", "Siempre"],
+      "correct_index": 1,
+      "explanation": "'Claro' is commonly used to mean 'Of course' or 'Sure'."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TranslationExercise",
+  "type": "object",
+  "required": ["id", "type", "prompt", "correct_answers"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "type": { "const": "translation" },
+    "prompt": { "type": "string", "minLength": 1, "description": "Sentence to translate" },
+    "source_language": { "type": "string", "minLength": 2, "maxLength": 10 },
+    "target_language": { "type": "string", "minLength": 2, "maxLength": 10 },
+    "correct_answers": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "description": "Accepted translations (case-insensitive)"
+    },
+    "explanation": { "type": "string" },
+    "audio_url": { "type": "string", "format": "uri" }
+  }
+}

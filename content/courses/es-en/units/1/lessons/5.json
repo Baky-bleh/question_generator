@@ -1,0 +1,84 @@
+{
+  "id": "es-en-u1-l5",
+  "title": "Basics 1 Review",
+  "unit_order": 1,
+  "lesson_order": 5,
+  "exercises": [
+    {
+      "id": "es-en-u1-l5-e1",
+      "type": "translation",
+      "prompt": "Hello, my name is Carlos",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["Hola, me llamo Carlos"]
+    },
+    {
+      "id": "es-en-u1-l5-e2",
+      "type": "multiple_choice",
+      "prompt": "What does 'Buenas tardes' mean?",
+      "choices": ["Good morning", "Good afternoon", "Good night", "Goodbye"],
+      "correct_index": 1
+    },
+    {
+      "id": "es-en-u1-l5-e3",
+      "type": "fill_blank",
+      "prompt": "¿Cómo te ___? Me llamo Ana.",
+      "correct_answers": ["llamas"]
+    },
+    {
+      "id": "es-en-u1-l5-e4",
+      "type": "matching",
+      "pairs": [
+        { "left": "Buenos días", "right": "Good morning" },
+        { "left": "Buenas tardes", "right": "Good afternoon" },
+        { "left": "Buenas noches", "right": "Good night" },
+        { "left": "Adiós", "right": "Goodbye" }
+      ]
+    },
+    {
+      "id": "es-en-u1-l5-e5",
+      "type": "listening",
+      "audio_url": "audio/es-en/review/mucho_gusto.mp3",
+      "correct_text": "Mucho gusto",
+      "acceptable_typos": 1
+    },
+    {
+      "id": "es-en-u1-l5-e6",
+      "type": "word_arrange",
+      "prompt": "Translate: 'I am from Mexico'",
+      "words": ["de", "México", "Soy", "en"],
+      "correct_order": ["Soy", "de", "México"]
+    },
+    {
+      "id": "es-en-u1-l5-e7",
+      "type": "translation",
+      "prompt": "I'm sorry, I don't understand",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["Lo siento, no entiendo"]
+    },
+    {
+      "id": "es-en-u1-l5-e8",
+      "type": "fill_blank",
+      "prompt": "Uno, dos, ___, cuatro, cinco",
+      "correct_answers": ["tres"]
+    },
+    {
+      "id": "es-en-u1-l5-e9",
+      "type": "multiple_choice",
+      "prompt": "What number is 'ocho'?",
+      "choices": ["6", "7", "8", "9"],
+      "correct_index": 2
+    },
+    {
+      "id": "es-en-u1-l5-e10",
+      "type": "matching",
+      "pairs": [
+        { "left": "Gracias", "right": "Thank you" },
+        { "left": "De nada", "right": "You're welcome" },
+        { "left": "Lo siento", "right": "I'm sorry" },
+        { "left": "Por favor", "right": "Please" }
+      ]
+    }
+  ]
+}

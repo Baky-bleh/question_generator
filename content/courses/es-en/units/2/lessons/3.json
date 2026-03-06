@@ -1,0 +1,72 @@
+{
+  "id": "es-en-u2-l3",
+  "title": "Food and Drink",
+  "unit_order": 2,
+  "lesson_order": 3,
+  "exercises": [
+    {
+      "id": "es-en-u2-l3-e1",
+      "type": "multiple_choice",
+      "prompt": "What does 'agua' mean?",
+      "choices": ["Milk", "Juice", "Water", "Coffee"],
+      "correct_index": 2,
+      "explanation": "'Agua' means 'water'."
+    },
+    {
+      "id": "es-en-u2-l3-e2",
+      "type": "matching",
+      "pairs": [
+        { "left": "pan", "right": "bread" },
+        { "left": "leche", "right": "milk" },
+        { "left": "café", "right": "coffee" },
+        { "left": "agua", "right": "water" }
+      ]
+    },
+    {
+      "id": "es-en-u2-l3-e3",
+      "type": "translation",
+      "prompt": "I want coffee, please",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["Quiero café, por favor", "Quiero cafe, por favor"]
+    },
+    {
+      "id": "es-en-u2-l3-e4",
+      "type": "fill_blank",
+      "prompt": "Me gusta la ___.",
+      "correct_answers": ["fruta", "comida", "leche"],
+      "hint": "A type of food or drink"
+    },
+    {
+      "id": "es-en-u2-l3-e5",
+      "type": "word_arrange",
+      "prompt": "Translate: 'The food is good'",
+      "words": ["buena", "La", "es", "comida", "mala"],
+      "correct_order": ["La", "comida", "es", "buena"]
+    },
+    {
+      "id": "es-en-u2-l3-e6",
+      "type": "listening",
+      "audio_url": "audio/es-en/food/cerveza.mp3",
+      "correct_text": "cerveza",
+      "acceptable_typos": 1,
+      "explanation": "'Cerveza' means 'beer'."
+    },
+    {
+      "id": "es-en-u2-l3-e7",
+      "type": "multiple_choice",
+      "prompt": "What does 'pollo' mean?",
+      "choices": ["Fish", "Beef", "Chicken", "Pork"],
+      "correct_index": 2,
+      "explanation": "'Pollo' means 'chicken'."
+    },
+    {
+      "id": "es-en-u2-l3-e8",
+      "type": "fill_blank",
+      "prompt": "Quiero un ___ de agua.",
+      "correct_answers": ["vaso"],
+      "hint": "A container for drinking",
+      "explanation": "'Vaso' means 'glass'. 'Un vaso de agua' = 'A glass of water'."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FillBlankExercise",
+  "type": "object",
+  "required": ["id", "type", "prompt", "correct_answers"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "type": { "const": "fill_blank" },
+    "prompt": { "type": "string", "minLength": 1, "description": "Sentence with ___ for the blank" },
+    "correct_answers": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "description": "Accepted answers (case-insensitive match)"
+    },
+    "hint": { "type": "string" },
+    "explanation": { "type": "string" },
+    "audio_url": { "type": "string", "format": "uri" }
+  }
+}

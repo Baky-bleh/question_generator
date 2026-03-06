@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MatchingExercise",
+  "type": "object",
+  "required": ["id", "type", "pairs"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "type": { "const": "matching" },
+    "pairs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["left", "right"],
+        "additionalProperties": false,
+        "properties": {
+          "left": { "type": "string", "minLength": 1 },
+          "right": { "type": "string", "minLength": 1 }
+        }
+      },
+      "minItems": 2,
+      "maxItems": 8
+    },
+    "explanation": { "type": "string" }
+  }
+}

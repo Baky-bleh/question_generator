@@ -1,0 +1,76 @@
+{
+  "id": "es-en-u2-l2",
+  "title": "Colors",
+  "unit_order": 2,
+  "lesson_order": 2,
+  "exercises": [
+    {
+      "id": "es-en-u2-l2-e1",
+      "type": "multiple_choice",
+      "prompt": "What color is 'rojo'?",
+      "choices": ["Blue", "Red", "Green", "Yellow"],
+      "correct_index": 1,
+      "explanation": "'Rojo' means 'red'."
+    },
+    {
+      "id": "es-en-u2-l2-e2",
+      "type": "matching",
+      "pairs": [
+        { "left": "rojo", "right": "red" },
+        { "left": "azul", "right": "blue" },
+        { "left": "verde", "right": "green" },
+        { "left": "amarillo", "right": "yellow" }
+      ]
+    },
+    {
+      "id": "es-en-u2-l2-e3",
+      "type": "fill_blank",
+      "prompt": "El cielo es ___.",
+      "correct_answers": ["azul"],
+      "hint": "The color of the sky",
+      "explanation": "'Azul' means 'blue'. 'El cielo es azul' = 'The sky is blue'."
+    },
+    {
+      "id": "es-en-u2-l2-e4",
+      "type": "translation",
+      "prompt": "The white house",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["La casa blanca"],
+      "explanation": "In Spanish, adjectives usually come after the noun."
+    },
+    {
+      "id": "es-en-u2-l2-e5",
+      "type": "listening",
+      "audio_url": "audio/es-en/colors/negro.mp3",
+      "correct_text": "negro",
+      "acceptable_typos": 0,
+      "explanation": "'Negro' means 'black'."
+    },
+    {
+      "id": "es-en-u2-l2-e6",
+      "type": "word_arrange",
+      "prompt": "Translate: 'The red car'",
+      "words": ["rojo", "El", "coche", "azul"],
+      "correct_order": ["El", "coche", "rojo"]
+    },
+    {
+      "id": "es-en-u2-l2-e7",
+      "type": "matching",
+      "pairs": [
+        { "left": "blanco", "right": "white" },
+        { "left": "negro", "right": "black" },
+        { "left": "naranja", "right": "orange" },
+        { "left": "morado", "right": "purple" }
+      ]
+    },
+    {
+      "id": "es-en-u2-l2-e8",
+      "type": "multiple_choice",
+      "prompt": "What does 'gris' mean?",
+      "choices": ["Green", "Gray", "Brown", "Pink"],
+      "correct_index": 1,
+      "explanation": "'Gris' means 'gray'."
+    }
+  ]
+}

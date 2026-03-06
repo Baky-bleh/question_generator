@@ -1,0 +1,75 @@
+{
+  "id": "es-en-u2-l4",
+  "title": "Days of the Week",
+  "unit_order": 2,
+  "lesson_order": 4,
+  "exercises": [
+    {
+      "id": "es-en-u2-l4-e1",
+      "type": "multiple_choice",
+      "prompt": "What day is 'lunes'?",
+      "choices": ["Sunday", "Monday", "Tuesday", "Wednesday"],
+      "correct_index": 1,
+      "explanation": "'Lunes' means 'Monday'."
+    },
+    {
+      "id": "es-en-u2-l4-e2",
+      "type": "matching",
+      "pairs": [
+        { "left": "lunes", "right": "Monday" },
+        { "left": "martes", "right": "Tuesday" },
+        { "left": "miércoles", "right": "Wednesday" },
+        { "left": "jueves", "right": "Thursday" }
+      ]
+    },
+    {
+      "id": "es-en-u2-l4-e3",
+      "type": "fill_blank",
+      "prompt": "Viernes, sábado, ___",
+      "correct_answers": ["domingo"],
+      "hint": "The last day of the week",
+      "explanation": "'Domingo' means 'Sunday'."
+    },
+    {
+      "id": "es-en-u2-l4-e4",
+      "type": "translation",
+      "prompt": "Today is Friday",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["Hoy es viernes"],
+      "explanation": "'Hoy' means 'today'."
+    },
+    {
+      "id": "es-en-u2-l4-e5",
+      "type": "word_arrange",
+      "prompt": "Translate: 'See you on Monday'",
+      "words": ["el", "lunes", "Hasta", "martes"],
+      "correct_order": ["Hasta", "el", "lunes"]
+    },
+    {
+      "id": "es-en-u2-l4-e6",
+      "type": "listening",
+      "audio_url": "audio/es-en/days/miercoles.mp3",
+      "correct_text": "miércoles",
+      "acceptable_typos": 1,
+      "explanation": "'Miércoles' means 'Wednesday'."
+    },
+    {
+      "id": "es-en-u2-l4-e7",
+      "type": "matching",
+      "pairs": [
+        { "left": "viernes", "right": "Friday" },
+        { "left": "sábado", "right": "Saturday" },
+        { "left": "domingo", "right": "Sunday" }
+      ]
+    },
+    {
+      "id": "es-en-u2-l4-e8",
+      "type": "multiple_choice",
+      "prompt": "Which day comes after 'martes'?",
+      "choices": ["Lunes", "Miércoles", "Jueves", "Viernes"],
+      "correct_index": 1,
+      "explanation": "'Miércoles' (Wednesday) comes after 'martes' (Tuesday)."
+    }
+  ]
+}

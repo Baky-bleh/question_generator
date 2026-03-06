@@ -1,0 +1,79 @@
+{
+  "id": "es-en-u1-l4",
+  "title": "Numbers 1-10",
+  "unit_order": 1,
+  "lesson_order": 4,
+  "exercises": [
+    {
+      "id": "es-en-u1-l4-e1",
+      "type": "multiple_choice",
+      "prompt": "What is 'tres' in English?",
+      "choices": ["One", "Two", "Three", "Four"],
+      "correct_index": 2,
+      "explanation": "'Tres' means 'three'."
+    },
+    {
+      "id": "es-en-u1-l4-e2",
+      "type": "matching",
+      "pairs": [
+        { "left": "uno", "right": "1" },
+        { "left": "dos", "right": "2" },
+        { "left": "tres", "right": "3" },
+        { "left": "cuatro", "right": "4" },
+        { "left": "cinco", "right": "5" }
+      ]
+    },
+    {
+      "id": "es-en-u1-l4-e3",
+      "type": "fill_blank",
+      "prompt": "Seis, siete, ___",
+      "correct_answers": ["ocho"],
+      "hint": "The number 8 in Spanish",
+      "explanation": "'Ocho' is the number 8."
+    },
+    {
+      "id": "es-en-u1-l4-e4",
+      "type": "translation",
+      "prompt": "ten",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["diez", "Diez"],
+      "explanation": "'Diez' means 'ten'."
+    },
+    {
+      "id": "es-en-u1-l4-e5",
+      "type": "listening",
+      "audio_url": "audio/es-en/numbers/siete.mp3",
+      "correct_text": "siete",
+      "acceptable_typos": 1,
+      "explanation": "'Siete' means 'seven'."
+    },
+    {
+      "id": "es-en-u1-l4-e6",
+      "type": "word_arrange",
+      "prompt": "Put these numbers in order: 7, 8, 9",
+      "words": ["nueve", "ocho", "siete"],
+      "correct_order": ["siete", "ocho", "nueve"],
+      "explanation": "Siete (7), ocho (8), nueve (9)."
+    },
+    {
+      "id": "es-en-u1-l4-e7",
+      "type": "matching",
+      "pairs": [
+        { "left": "seis", "right": "6" },
+        { "left": "siete", "right": "7" },
+        { "left": "ocho", "right": "8" },
+        { "left": "nueve", "right": "9" },
+        { "left": "diez", "right": "10" }
+      ]
+    },
+    {
+      "id": "es-en-u1-l4-e8",
+      "type": "multiple_choice",
+      "prompt": "What is 'cinco' in English?",
+      "choices": ["Three", "Four", "Five", "Six"],
+      "correct_index": 2,
+      "explanation": "'Cinco' means 'five'."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MultipleChoiceExercise",
+  "type": "object",
+  "required": ["id", "type", "prompt", "choices", "correct_index"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "type": { "const": "multiple_choice" },
+    "prompt": { "type": "string", "minLength": 1 },
+    "choices": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 2,
+      "maxItems": 6
+    },
+    "correct_index": { "type": "integer", "minimum": 0 },
+    "explanation": { "type": "string" },
+    "audio_url": { "type": "string", "format": "uri" }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "course_slug": "es-en",
+  "language_from": "en",
+  "language_to": "es",
+  "title": "Spanish for English Speakers",
+  "description": "Learn Spanish from scratch with interactive lessons covering vocabulary, grammar, and conversation skills.",
+  "content_version": "v1.0.0",
+  "units": [
+    {
+      "order": 1,
+      "title": "Basics 1",
+      "lessons": [
+        { "id": "es-en-u1-l1", "order": 1, "title": "Greetings", "type": "standard", "exercise_count": 8, "estimated_minutes": 5 },
+        { "id": "es-en-u1-l2", "order": 2, "title": "Introductions", "type": "standard", "exercise_count": 8, "estimated_minutes": 5 },
+        { "id": "es-en-u1-l3", "order": 3, "title": "Common Phrases", "type": "standard", "exercise_count": 8, "estimated_minutes": 5 },
+        { "id": "es-en-u1-l4", "order": 4, "title": "Numbers 1-10", "type": "standard", "exercise_count": 8, "estimated_minutes": 5 },
+        { "id": "es-en-u1-l5", "order": 5, "title": "Basics 1 Review", "type": "checkpoint", "exercise_count": 10, "estimated_minutes": 7 }
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Basics 2",
+      "lessons": [
+        { "id": "es-en-u2-l1", "order": 1, "title": "Family Members", "type": "standard", "exercise_count": 8, "estimated_minutes": 5 },
+        { "id": "es-en-u2-l2", "order": 2, "title": "Colors", "type": "standard", "exercise_count": 8, "estimated_minutes": 5 },
+        { "id": "es-en-u2-l3", "order": 3, "title": "Food and Drink", "type": "standard", "exercise_count": 8, "estimated_minutes": 5 },
+        { "id": "es-en-u2-l4", "order": 4, "title": "Days of the Week", "type": "standard", "exercise_count": 8, "estimated_minutes": 5 },
+        { "id": "es-en-u2-l5", "order": 5, "title": "Basics 2 Review", "type": "checkpoint", "exercise_count": 10, "estimated_minutes": 7 }
+      ]
+    }
+  ]
+}

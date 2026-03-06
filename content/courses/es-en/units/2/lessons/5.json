@@ -1,0 +1,85 @@
+{
+  "id": "es-en-u2-l5",
+  "title": "Basics 2 Review",
+  "unit_order": 2,
+  "lesson_order": 5,
+  "exercises": [
+    {
+      "id": "es-en-u2-l5-e1",
+      "type": "translation",
+      "prompt": "My mother is from Spain",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["Mi madre es de España"]
+    },
+    {
+      "id": "es-en-u2-l5-e2",
+      "type": "matching",
+      "pairs": [
+        { "left": "padre", "right": "father" },
+        { "left": "hermana", "right": "sister" },
+        { "left": "abuelo", "right": "grandfather" },
+        { "left": "hija", "right": "daughter" }
+      ]
+    },
+    {
+      "id": "es-en-u2-l5-e3",
+      "type": "multiple_choice",
+      "prompt": "What color is 'verde'?",
+      "choices": ["Blue", "Yellow", "Green", "Red"],
+      "correct_index": 2
+    },
+    {
+      "id": "es-en-u2-l5-e4",
+      "type": "fill_blank",
+      "prompt": "El gato es ___.",
+      "correct_answers": ["negro", "blanco", "gris"],
+      "hint": "A color"
+    },
+    {
+      "id": "es-en-u2-l5-e5",
+      "type": "word_arrange",
+      "prompt": "Translate: 'I want bread and milk'",
+      "words": ["leche", "Quiero", "pan", "y", "café"],
+      "correct_order": ["Quiero", "pan", "y", "leche"]
+    },
+    {
+      "id": "es-en-u2-l5-e6",
+      "type": "listening",
+      "audio_url": "audio/es-en/review/familia.mp3",
+      "correct_text": "Mi familia es grande",
+      "acceptable_typos": 1
+    },
+    {
+      "id": "es-en-u2-l5-e7",
+      "type": "translation",
+      "prompt": "Today is Saturday",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["Hoy es sábado", "Hoy es sabado"]
+    },
+    {
+      "id": "es-en-u2-l5-e8",
+      "type": "multiple_choice",
+      "prompt": "What does 'pollo' mean?",
+      "choices": ["Fish", "Chicken", "Beef", "Pork"],
+      "correct_index": 1
+    },
+    {
+      "id": "es-en-u2-l5-e9",
+      "type": "fill_blank",
+      "prompt": "Lunes, martes, ___",
+      "correct_answers": ["miércoles", "miercoles"]
+    },
+    {
+      "id": "es-en-u2-l5-e10",
+      "type": "matching",
+      "pairs": [
+        { "left": "agua", "right": "water" },
+        { "left": "café", "right": "coffee" },
+        { "left": "pan", "right": "bread" },
+        { "left": "leche", "right": "milk" }
+      ]
+    }
+  ]
+}

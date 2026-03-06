@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WordArrangeExercise",
+  "type": "object",
+  "required": ["id", "type", "prompt", "words", "correct_order"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "type": { "const": "word_arrange" },
+    "prompt": { "type": "string", "minLength": 1, "description": "Instruction, e.g. Translate this sentence" },
+    "words": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 2,
+      "description": "Shuffled word bank (may include distractors)"
+    },
+    "correct_order": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 2,
+      "description": "Words in the correct order"
+    },
+    "explanation": { "type": "string" }
+  }
+}

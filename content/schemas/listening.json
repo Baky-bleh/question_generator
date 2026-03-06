@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ListeningExercise",
+  "type": "object",
+  "required": ["id", "type", "audio_url", "correct_text"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "type": { "const": "listening" },
+    "audio_url": { "type": "string", "minLength": 1 },
+    "correct_text": { "type": "string", "minLength": 1 },
+    "acceptable_typos": { "type": "integer", "minimum": 0, "default": 1 },
+    "hint": { "type": "string" },
+    "explanation": { "type": "string" }
+  }
+}

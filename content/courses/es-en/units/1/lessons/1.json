@@ -1,0 +1,76 @@
+{
+  "id": "es-en-u1-l1",
+  "title": "Greetings",
+  "unit_order": 1,
+  "lesson_order": 1,
+  "exercises": [
+    {
+      "id": "es-en-u1-l1-e1",
+      "type": "multiple_choice",
+      "prompt": "How do you say 'Hello' in Spanish?",
+      "choices": ["Adiós", "Hola", "Gracias", "Por favor"],
+      "correct_index": 1,
+      "explanation": "'Hola' is the most common greeting in Spanish."
+    },
+    {
+      "id": "es-en-u1-l1-e2",
+      "type": "translation",
+      "prompt": "Good morning",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["Buenos días", "Buenos dias"],
+      "explanation": "'Buenos días' literally means 'good days' and is used until noon."
+    },
+    {
+      "id": "es-en-u1-l1-e3",
+      "type": "fill_blank",
+      "prompt": "Buenas ___",
+      "correct_answers": ["noches", "Noches"],
+      "hint": "Used to say 'Good night'",
+      "explanation": "'Buenas noches' means 'Good night' or 'Good evening'."
+    },
+    {
+      "id": "es-en-u1-l1-e4",
+      "type": "matching",
+      "pairs": [
+        { "left": "Hola", "right": "Hello" },
+        { "left": "Adiós", "right": "Goodbye" },
+        { "left": "Gracias", "right": "Thank you" },
+        { "left": "Por favor", "right": "Please" }
+      ]
+    },
+    {
+      "id": "es-en-u1-l1-e5",
+      "type": "word_arrange",
+      "prompt": "Translate: 'Good afternoon'",
+      "words": ["tardes", "Buenos", "Buenas", "días"],
+      "correct_order": ["Buenas", "tardes"],
+      "explanation": "'Buenas tardes' is used from noon until evening."
+    },
+    {
+      "id": "es-en-u1-l1-e6",
+      "type": "listening",
+      "audio_url": "audio/es-en/greetings/hola.mp3",
+      "correct_text": "Hola",
+      "acceptable_typos": 0,
+      "explanation": "You heard 'Hola', which means 'Hello'."
+    },
+    {
+      "id": "es-en-u1-l1-e7",
+      "type": "multiple_choice",
+      "prompt": "What does 'Adiós' mean?",
+      "choices": ["Hello", "Please", "Goodbye", "Thank you"],
+      "correct_index": 2,
+      "explanation": "'Adiós' is the standard way to say 'Goodbye'."
+    },
+    {
+      "id": "es-en-u1-l1-e8",
+      "type": "translation",
+      "prompt": "Thank you very much",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["Muchas gracias"],
+      "explanation": "'Muchas gracias' literally means 'many thanks'."
+    }
+  ]
+}

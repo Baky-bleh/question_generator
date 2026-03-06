@@ -1,0 +1,74 @@
+{
+  "id": "es-en-u2-l1",
+  "title": "Family Members",
+  "unit_order": 2,
+  "lesson_order": 1,
+  "exercises": [
+    {
+      "id": "es-en-u2-l1-e1",
+      "type": "multiple_choice",
+      "prompt": "What does 'madre' mean?",
+      "choices": ["Father", "Mother", "Brother", "Sister"],
+      "correct_index": 1,
+      "explanation": "'Madre' means 'mother'."
+    },
+    {
+      "id": "es-en-u2-l1-e2",
+      "type": "matching",
+      "pairs": [
+        { "left": "padre", "right": "father" },
+        { "left": "madre", "right": "mother" },
+        { "left": "hermano", "right": "brother" },
+        { "left": "hermana", "right": "sister" }
+      ]
+    },
+    {
+      "id": "es-en-u2-l1-e3",
+      "type": "translation",
+      "prompt": "My family is big",
+      "source_language": "en",
+      "target_language": "es",
+      "correct_answers": ["Mi familia es grande"],
+      "explanation": "'Grande' means 'big' in this context."
+    },
+    {
+      "id": "es-en-u2-l1-e4",
+      "type": "fill_blank",
+      "prompt": "Mi ___ se llama Juan.",
+      "correct_answers": ["hermano", "padre", "abuelo"],
+      "hint": "A male family member"
+    },
+    {
+      "id": "es-en-u2-l1-e5",
+      "type": "word_arrange",
+      "prompt": "Translate: 'I have two brothers'",
+      "words": ["hermanos", "dos", "Tengo", "tres"],
+      "correct_order": ["Tengo", "dos", "hermanos"]
+    },
+    {
+      "id": "es-en-u2-l1-e6",
+      "type": "listening",
+      "audio_url": "audio/es-en/family/familia.mp3",
+      "correct_text": "Mi familia",
+      "acceptable_typos": 1
+    },
+    {
+      "id": "es-en-u2-l1-e7",
+      "type": "matching",
+      "pairs": [
+        { "left": "abuelo", "right": "grandfather" },
+        { "left": "abuela", "right": "grandmother" },
+        { "left": "hijo", "right": "son" },
+        { "left": "hija", "right": "daughter" }
+      ]
+    },
+    {
+      "id": "es-en-u2-l1-e8",
+      "type": "multiple_choice",
+      "prompt": "What does 'hijos' mean?",
+      "choices": ["Parents", "Children", "Siblings", "Cousins"],
+      "correct_index": 1,
+      "explanation": "'Hijos' means 'children' (sons and daughters)."
+    }
+  ]
+}
