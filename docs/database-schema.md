@@ -1,6 +1,6 @@
 # Database Schema
 
-> Last synced: 2026-03-09 by doc-sync agent
+> Last synced: 2026-03-10 by doc-sync agent
 > Engine: PostgreSQL 16 (hosted on Supabase)
 > ORM: SQLAlchemy 2.0 (async) + Alembic migrations
 

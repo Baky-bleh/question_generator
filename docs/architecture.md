@@ -1,6 +1,6 @@
 # Architecture
 
-> Last synced: 2026-03-09 by doc-sync agent
+> Last synced: 2026-03-10 by doc-sync agent
 
 ## System Overview
 

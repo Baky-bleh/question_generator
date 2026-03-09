@@ -1,6 +1,6 @@
 # API Contracts
 
-> Last synced: 2026-03-09 by doc-sync agent
+> Last synced: 2026-03-10 by doc-sync agent
 > This document is the source of truth for all API endpoints.
 > Mobile and Web teams: read this before writing any API call.
 > Backend team: update this (via CHANGELOG_ENTRY) when adding/changing endpoints.

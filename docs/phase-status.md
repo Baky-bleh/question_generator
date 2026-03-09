@@ -1,6 +1,6 @@
 # Phase Status
 
-> Last synced: 2026-03-09 by doc-sync agent
+> Last synced: 2026-03-10 by doc-sync agent
 > This document tracks what's built, what's in progress, and what's next.
 > New agents: READ THIS FIRST to understand the current state of the project.
 
@@ -58,7 +58,7 @@
 - [x] SRS (SM-2) algorithm produces correct intervals
 - [x] Streak system with timezone-aware tracking and auto-freeze consumption
 - [x] XP calculation with base + bonus (perfect, streak, speed)
-- [x] Tests for all modules (17 test files)
+- [x] Tests for all modules (19 test files)
 - [x] Alembic migrations (`001_initial_schema.py`, `002_add_daily_goal_to_users.py`)
 - [x] Docker Compose starts full backend stack
 - [ ] OpenAPI spec auto-generates (FastAPI built-in, not explicitly tested)
@@ -170,11 +170,13 @@
 The mobile app scaffold has been created with:
 - **App Navigation** (`mobile/app/`): Expo Router with (auth), (tabs), and (lesson) route groups
 - **UI Components** (`mobile/src/components/ui/`): Badge, BottomSheet, Button, Card, EmptyState, Input, Modal, ProgressBar, Toast
-- **Lesson Components** (`mobile/src/components/lesson/`): ExerciseRenderer, ExerciseTransition, AnswerFeedback, HeartsDisplay, LessonProgressBar + 6 exercise type components (FillBlank, Listening, Matching, MultipleChoice, Translation, WordArrange)
+- **Lesson Components** (`mobile/src/components/lesson/`): ExerciseRenderer, ExerciseTransition, AnswerFeedback, HeartsDisplay, LessonProgressBar + 7 exercise type components (FillBlank, Listening, Matching, MultipleChoice, NumberInput, Translation, WordArrange)
+- **Video Components** (`mobile/src/components/video/`): VideoPlayer, VideoControls, QuizUnlockBanner
+- **Quiz Components** (`mobile/src/components/quiz/`): QuizIntro, QuizLockBanner
 - **Mascot System** (`mobile/src/components/mascot/`): Animated SVG fox mascot with 11 emotional states (angry, base, celebrating, encouraging, happy, idle, sad, sleeping, teaching, thinking, waving)
-- **Progress Components** (`mobile/src/components/progress/`): LevelIndicator, StreakFire, XPBadge
-- **Screens** (`mobile/src/screens/`): Home (HomeScreen, DailyProgress, StreakWidget), Learn (SkillTree, UnitCard, LessonNode), Lesson (LessonIntro, LessonResults), Onboarding (Welcome, LanguageSelect, GoalSelect), Profile (ProfileScreen, SettingsScreen, StatsCard), Review (ReviewSession)
-- **Hooks** (`mobile/src/hooks/`): useAuth, useLesson, useLessonPlayer, useOnlineStatus + query hooks (useCourses, useLesson, useProgress, useReview, useStreak, useSubmitAnswer, useCompleteLesson, useUser)
+- **Progress Components** (`mobile/src/components/progress/`): LevelIndicator, StreakFire, VideoWatchRing, XPBadge
+- **Screens** (`mobile/src/screens/`): Home (HomeScreen, DailyProgress, StreakWidget), Learn (SkillTree, UnitCard, LessonNode, VideoLessonNode), Lesson (LessonIntro, LessonResults), Onboarding (Welcome, LanguageSelect, GoalSelect), Profile (ProfileScreen, SettingsScreen, StatsCard), Review (ReviewSession)
+- **Hooks** (`mobile/src/hooks/`): useAuth, useLesson, useLessonPlayer, useOnlineStatus, useVideoPlayer, useQuizPlayer + query hooks (useCourses, useLesson, useProgress, useReview, useStreak, useSubmitAnswer, useCompleteLesson, useUser, useVideoLesson, useQuiz)
 - **Services** (`mobile/src/services/`): api.ts, auth.ts, notifications.ts, offline.ts, sync.ts
 - **Stores** (`mobile/src/stores/`): authStore, progressStore, settingsStore (Zustand)
 - **Theme** (`mobile/src/theme/`): colors, typography, spacing, shadows
@@ -182,7 +184,7 @@ The mobile app scaffold has been created with:
 ### Acceptance Criteria
 - [ ] User can sign up, log in, select a language
 - [ ] Skill tree displays with correct locked/available/completed states
-- [ ] Lesson player renders all 6 exercise types
+- [ ] Lesson player renders all 7 exercise types (including NumberInput)
 - [ ] Lesson completion shows XP breakdown and streak update
 - [ ] Offline mode works for pre-downloaded lessons
 - [ ] Push notifications fire for streak reminders
@@ -220,7 +222,7 @@ The mobile app scaffold has been created with:
 - Added to Settings: VIDEO_BACKEND, VIDEO_LOCAL_DIR, MUX_TOKEN_ID, MUX_TOKEN_SECRET, MUX_WEBHOOK_SECRET
 
 **Static File Serving**:
-- `main.py` updated to mount `/static/videos` from `content/videos/` directory
+- `main.py` updated to mount `/static/videos` from `CONTENT_DIR/videos/` directory
 
 **Database Migration**:
 - `003_add_video_tables.py` — Creates video_lessons + video_progress tables, adds course_type + content_mode columns to courses
@@ -277,6 +279,7 @@ Details TBD — plan will be created before this phase starts.
 
 | Date | Phase | Agent | Change Summary |
 |------|-------|-------|---------------|
+| 2026-03-10 | 3A | Doc Sync | Re-synced all docs after Phase 3 completion. Corrected test file count to 19. Updated mobile scaffold docs to include video/quiz/math components (VideoPlayer, VideoControls, QuizUnlockBanner, QuizIntro, QuizLockBanner, NumberInput, VideoWatchRing, VideoLessonNode, useVideoPlayer, useQuizPlayer, useVideoLesson, useQuiz). 21 total API endpoints, 13 DB tables, 7 exercise validators, 19 test files. |
 | 2026-03-09 | 3A | Doc Sync | Phase 3A complete: Video module (3 endpoints, 2 DB tables, VideoStorage abstraction), number_input validator (7th type), math course content (algebra-basics), course model extended with course_type/content_mode. 21 total API endpoints, 13 DB tables, 7 exercise validators, 20 test files. |
 | 2026-03-06 | 1 | Doc Sync | Re-synced all docs after Phase 1 completion. 18 API endpoints, 11 DB tables, 6 exercise validators, 17 test files. Corrected error response format, Redis data structures, endpoint count. |
 | 2026-03-05 | 1 | Doc Sync | Phase 1 complete: 16 API endpoints, 11 DB models, 6 exercise validators, 17 test files (~180 tests). All core backend services built. |
