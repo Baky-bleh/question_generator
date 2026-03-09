@@ -1,6 +1,6 @@
 # API Contracts
 
-> Last synced: 2026-03-06 by doc-sync agent
+> Last synced: 2026-03-09 by doc-sync agent
 > This document is the source of truth for all API endpoints.
 > Mobile and Web teams: read this before writing any API call.
 > Backend team: update this (via CHANGELOG_ENTRY) when adding/changing endpoints.
@@ -152,11 +152,14 @@ List all published courses.
         "description": "string | null",
         "total_units": 20,
         "thumbnail_url": "string | null",
-        "content_version": "v1.2.3"
+        "content_version": "v1.2.3",
+        "course_type": "language",
+        "content_mode": "exercise"
       }
     ]
   }
   ```
+- **Notes**: `course_type` is "language" or "math". `content_mode` is "exercise" (language) or "video_quiz" (math).
 
 ### `GET /api/v1/courses/{course_id}`
 Get course detail with units, lessons, and user progress.
@@ -176,10 +179,15 @@ Get course detail with units, lessons, and user progress.
             "id": "string",
             "order": 1,
             "title": "Greetings",
-            "type": "standard | review | checkpoint",
+            "type": "standard | review | checkpoint | video",
             "status": "locked | available | completed",
             "best_score": 95,
-            "exercise_count": 10
+            "exercise_count": 10,
+            "duration_seconds": null,
+            "thumbnail_url": null,
+            "watch_percent": null,
+            "quiz_unlocked": null,
+            "quiz_id": null
           }
         ]
       }
@@ -192,7 +200,7 @@ Get course detail with units, lessons, and user progress.
     }
   }
   ```
-- **Notes**: `enrollment` is `null` if user is not enrolled. `status` is computed from user progress.
+- **Notes**: `enrollment` is `null` if user is not enrolled. `status` is computed from user progress. For video_quiz courses, `type` is "video" and video-specific fields (`duration_seconds`, `watch_percent`, `quiz_unlocked`, `quiz_id`) are populated; `exercise_count` is 0.
 
 ### `POST /api/v1/courses/{course_id}/enroll`
 Enroll current user in a course.
@@ -249,7 +257,7 @@ Submit a single exercise answer for server-side validation.
     "xp_earned": 2
   }
   ```
-- **Notes**: Server validates answer using exercise-type-specific validators (6 types: multiple_choice, fill_blank, matching, listening, word_arrange, translation). XP per correct answer: 2.
+- **Notes**: Server validates answer using exercise-type-specific validators (7 types: multiple_choice, fill_blank, matching, listening, word_arrange, translation, number_input). XP per correct answer: 2.
 
 ---
 
@@ -399,51 +407,65 @@ Get current user's streak info.
 
 ---
 
-## Planned Endpoints (Phase 3)
+## Video Lesson Endpoints
 
-These endpoints will be built in Phase 3. Listed here so mobile and web
-teams can plan their UI ahead of time.
+Router: `src/video/router.py` — prefix `/api/v1/video-lessons`
 
 ### `GET /api/v1/video-lessons/{video_lesson_id}`
-Get video lesson metadata and playback URL.
+Get video lesson metadata with user progress and quiz unlock status.
 - **Auth**: Required
-- **Response** `200`:
+- **Path params**: `video_lesson_id` — string (matches video_lessons.id)
+- **Response** `200` (`VideoLessonDetailResponse`):
   ```json
   {
-    "id": "uuid",
-    "title": "Understanding Variables",
-    "video_url": "string (local path or Mux HLS URL)",
-    "duration_seconds": 750,
-    "thumbnail_url": "string | null",
-    "teacher_name": "string | null",
-    "quiz_id": "string | null",
-    "watch_threshold_percent": 80,
-    "user_progress": {
+    "video_lesson": {
+      "id": "string",
+      "title": "Understanding Variables",
+      "description": "string | null",
+      "video_url": "string (local path or Mux HLS URL)",
+      "video_duration_seconds": 750,
+      "thumbnail_url": "string | null",
+      "teacher_name": "string | null",
+      "quiz_id": "string | null",
+      "watch_threshold_percent": 80
+    },
+    "progress": {
       "watch_percent": 45,
       "last_position_seconds": 337,
       "completed": false,
-      "quiz_unlocked": false
-    }
+      "completed_at": null
+    },
+    "quiz_unlocked": false
   }
   ```
+- **Notes**: `progress` is `null` if user hasn't started watching. `quiz_unlocked` is true when `watch_percent >= watch_threshold_percent`.
 
 ### `POST /api/v1/video-lessons/{video_lesson_id}/progress`
 Report video watch progress. Called every 30 seconds during playback.
 - **Auth**: Required
-- **Request**: `{ "position_seconds": 337, "watch_percent": 45 }`
-- **Response** `200`:
+- **Path params**: `video_lesson_id` — string
+- **Request** (`VideoProgressUpdateRequest`):
   ```json
-  { "watch_percent": 45, "completed": false, "quiz_unlocked": false }
+  { "position_seconds": 337, "watch_percent": 45 }
   ```
-- **Notes**: When watch_percent crosses threshold, quiz_unlocked becomes true.
+- **Response** `200` (`VideoProgressResponse`):
+  ```json
+  {
+    "watch_percent": 45,
+    "last_position_seconds": 337,
+    "completed": false,
+    "quiz_unlocked": false
+  }
+  ```
+- **Notes**: Anti-cheat: `watch_percent` never decreases (server takes max of current and submitted). `position_seconds` can go backwards (seeking). When `watch_percent` crosses threshold, `completed` becomes true and `quiz_unlocked` becomes true.
 
 ### `GET /api/v1/video-lessons/{video_lesson_id}/quiz`
-Get quiz exercises for this video lesson. Returns 403 if video not sufficiently watched.
+Get quiz exercises for a video lesson. Returns 403 if video not sufficiently watched.
 - **Auth**: Required
-- **Response** `200`: Same exercise JSON format as language lessons
-- **Errors**: `403 video watch threshold not met`
-- **Notes**: Quiz submission and completion use existing lesson endpoints
-  (POST /lessons/{quiz_id}/submit and POST /lessons/{quiz_id}/complete)
+- **Path params**: `video_lesson_id` — string
+- **Response** `200`: Quiz exercise JSON (same format as language lesson exercises)
+- **Errors**: `403 video watch threshold not met` | `404 video lesson not found` | `404 quiz not found`
+- **Notes**: Quiz submission and completion use existing lesson endpoints (`POST /lessons/{quiz_id}/submit` and `POST /lessons/{quiz_id}/complete`). Quiz JSON loaded from `content/courses/{slug}/quizzes/{quiz_id}.json`.
 
 ---
 
@@ -451,12 +473,11 @@ Get quiz exercises for this video lesson. Returns 403 if video not sufficiently 
 
 The following endpoints from the original design are **not yet built** (planned for future phases):
 
-- Video lesson endpoints (Phase 3A)
-- Math exercise types (Phase 3A)
 - `GET /api/v1/leaderboard/weekly` — Leaderboard rankings (Phase 6: Gamification)
 - `GET /api/v1/subscription/status` — Subscription status (Phase 5: Monetization)
 - `POST /api/v1/subscription/verify` — Purchase verification (Phase 5: Monetization)
 - `POST /api/v1/webhooks/revenuecat` — RevenueCat webhook (Phase 5: Monetization)
+- Admin video upload endpoints (deferred)
 
 **Note**: The `subscriptions` module has a database model (`src/subscriptions/models.py`) but no router or service yet.
 

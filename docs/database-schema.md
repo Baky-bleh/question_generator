@@ -1,12 +1,13 @@
 # Database Schema
 
-> Last synced: 2026-03-06 by doc-sync agent
+> Last synced: 2026-03-09 by doc-sync agent
 > Engine: PostgreSQL 16 (hosted on Supabase)
 > ORM: SQLAlchemy 2.0 (async) + Alembic migrations
 
 ## Schema Rules
 - All tables using `TimestampMixin` include `id` (UUID v4 PK), `created_at` (server_default=now()), `updated_at` (server_default=now(), onupdate=now())
 - `XPEvent` and `Achievement` define their own `id` and `created_at`/`unlocked_at` without `TimestampMixin`
+- `VideoLesson` does NOT use `TimestampMixin` — uses String(100) PK and its own created_at/updated_at
 - All foreign keys have indexes
 - Use snake_case for table and column names
 
@@ -67,8 +68,8 @@ Course metadata (content lives on S3/local filesystem). Source: `src/courses/mod
 | title | VARCHAR(255) | NOT NULL | |
 | description | TEXT | NULLABLE | |
 | thumbnail_url | VARCHAR(500) | NULLABLE | |
-| course_type | VARCHAR(20) | NOT NULL, default 'language' | 'language', 'math', 'science' (extensible) |
-| content_mode | VARCHAR(20) | NOT NULL, default 'exercise' | 'exercise' (language), 'video_quiz' (math) |
+| course_type | VARCHAR(20) | NOT NULL, server_default 'language' | 'language', 'math', 'science' (extensible) |
+| content_mode | VARCHAR(20) | NOT NULL, server_default 'exercise' | 'exercise' (language), 'video_quiz' (math) |
 | content_version | VARCHAR(50) | NOT NULL | Semver, maps to content path |
 | total_units | INT | NOT NULL | |
 | total_lessons | INT | NOT NULL | |
@@ -94,7 +95,7 @@ Unified subscription state across all platforms. Source: `src/subscriptions/mode
 | created_at | TIMESTAMP | NOT NULL | Via TimestampMixin |
 | updated_at | TIMESTAMP | NOT NULL | Via TimestampMixin |
 
-**Note**: Model exists but no router/service yet. Will be built in Phase 4 (Monetization).
+**Note**: Model exists but no router/service yet. Will be built in Phase 5 (Monetization).
 
 ### user_course_enrollments
 Tracks which courses a user is taking. Source: `src/progress/models.py`
@@ -196,6 +197,46 @@ Unlocked achievements per user. Source: `src/progress/models.py`
 
 Unique constraint: `(user_id, achievement_type)` — name `uq_user_achievement`
 
+### video_lessons
+Video content metadata and quiz associations. Source: `src/video/models.py`
+
+**Note**: Does NOT use `TimestampMixin`. Uses String(100) PK (not UUID).
+| Column | Type | Constraints | Notes |
+|--------|------|------------|-------|
+| id | VARCHAR(100) | PK | String ID, not UUID |
+| course_id | UUID | FK -> courses, INDEX, NOT NULL | |
+| unit_order | INT | NOT NULL | |
+| lesson_order | INT | NOT NULL | |
+| title | VARCHAR(255) | NOT NULL | |
+| description | TEXT | NULLABLE | |
+| video_url | VARCHAR(500) | NOT NULL | Local path (dev) or Mux HLS URL (prod) |
+| video_duration_seconds | INT | NOT NULL | |
+| thumbnail_url | VARCHAR(500) | NULLABLE | |
+| teacher_name | VARCHAR(100) | NULLABLE | |
+| transcript_url | VARCHAR(500) | NULLABLE | For accessibility and search |
+| quiz_id | VARCHAR(100) | NULLABLE | Links to quiz exercises (same format as lessons) |
+| watch_threshold_percent | INT | NOT NULL, server_default 80 | % required before quiz unlocks |
+| created_at | TIMESTAMP WITH TZ | NOT NULL, server_default now() | |
+| updated_at | TIMESTAMP WITH TZ | NOT NULL, server_default now() | |
+
+### video_progress
+Per-user video watch tracking and quiz unlock state. Source: `src/video/models.py`
+
+**Note**: Uses `TimestampMixin` for `id`, `created_at`, `updated_at`.
+| Column | Type | Constraints | Notes |
+|--------|------|------------|-------|
+| id | UUID | PK | Via TimestampMixin |
+| user_id | UUID | FK -> users, INDEX, NOT NULL | |
+| video_lesson_id | VARCHAR(100) | FK -> video_lessons, INDEX, NOT NULL | |
+| watch_percent | INT | NOT NULL, server_default 0 | 0-100 |
+| last_position_seconds | INT | NOT NULL, server_default 0 | Resume playback from here |
+| completed | BOOLEAN | NOT NULL, server_default false | True when watch_percent >= threshold |
+| completed_at | TIMESTAMP | NULLABLE | |
+| created_at | TIMESTAMP | NOT NULL | Via TimestampMixin |
+| updated_at | TIMESTAMP | NOT NULL | Via TimestampMixin |
+
+Unique constraint: `(user_id, video_lesson_id)` — name `uq_user_video_progress`
+
 ---
 
 ## Redis Data Structures
@@ -208,52 +249,19 @@ Unique constraint: `(user_id, achievement_type)` — name `uq_user_achievement`
 **Not yet implemented** (planned for future phases):
 | Key Pattern | Type | TTL | Purpose |
 |-------------|------|-----|---------|
-| `leaderboard:weekly:{league}` | Sorted Set | Reset Monday 00:00 UTC | Weekly XP rankings (Phase 5) |
-| `features:{user_id}` | Hash | 5 min | `{show_ads, has_premium, streak_freeze}` (Phase 4) |
+| `leaderboard:weekly:{league}` | Sorted Set | Reset Monday 00:00 UTC | Weekly XP rankings (Phase 6) |
+| `features:{user_id}` | Hash | 5 min | `{show_ads, has_premium, streak_freeze}` (Phase 5) |
 | `session:{token_jti}` | String | 15 min | Active session validation (not implemented) |
 
 ---
 
-## Planned Tables (Phase 3)
+## Migration History
 
-> These tables will be created when Phase 3 (Math/Video Courses) is implemented. Listed here for planning purposes.
-
-### video_lessons
-Video content metadata and quiz associations. Not yet created. Source: `src/video/models.py` (planned)
-| Column | Type | Constraints | Notes |
-|--------|------|------------|-------|
-| id | UUID | PK | |
-| course_id | UUID | FK → courses, INDEX | |
-| unit_order | INT | NOT NULL | |
-| lesson_order | INT | NOT NULL | |
-| title | VARCHAR(255) | NOT NULL | |
-| description | TEXT | NULLABLE | |
-| video_url | VARCHAR(500) | NOT NULL | Local path (dev) or Mux HLS URL (prod) |
-| video_duration_seconds | INT | NOT NULL | |
-| thumbnail_url | VARCHAR(500) | NULLABLE | |
-| teacher_name | VARCHAR(100) | NULLABLE | |
-| transcript_url | VARCHAR(500) | NULLABLE | For accessibility and search |
-| quiz_id | VARCHAR(100) | NULLABLE | Links to quiz exercises (same format as lessons) |
-| watch_threshold_percent | INT | NOT NULL, default 80 | % required before quiz unlocks |
-| created_at | TIMESTAMP WITH TZ | NOT NULL | |
-| updated_at | TIMESTAMP WITH TZ | NOT NULL | |
-
-### video_progress
-Per-user video watch tracking and quiz unlock state. Not yet created. Source: `src/video/models.py` (planned)
-| Column | Type | Constraints | Notes |
-|--------|------|------------|-------|
-| id | UUID | PK | |
-| user_id | UUID | FK → users, INDEX | |
-| video_lesson_id | UUID | FK → video_lessons, INDEX | |
-| watch_percent | INT | NOT NULL, default 0 | 0-100 |
-| last_position_seconds | INT | NOT NULL, default 0 | Resume playback from here |
-| completed | BOOLEAN | NOT NULL, default false | True when watch_percent >= threshold |
-| completed_at | TIMESTAMP WITH TZ | NULLABLE | |
-| created_at | TIMESTAMP WITH TZ | NOT NULL | |
-| updated_at | TIMESTAMP WITH TZ | NOT NULL | |
-| | | UNIQUE(user_id, video_lesson_id) | |
-
----
+| Migration | Description |
+|-----------|-------------|
+| `001_initial_schema.py` | Creates 11 tables: users, user_auth_providers, refresh_tokens, courses, subscriptions, user_course_enrollments, lesson_completions, srs_items, streaks, xp_events, achievements |
+| `002_add_daily_goal_to_users.py` | Adds `daily_goal` column to users table |
+| `003_add_video_tables.py` | Creates video_lessons + video_progress tables; adds course_type + content_mode columns to courses |
 
 ## Migration Conventions
 
@@ -266,7 +274,3 @@ alembic revision --autogenerate -m "descriptive_message_here"
 # Never edit a migration that's already been applied to staging/production
 # For data migrations, create a separate migration file (not autogenerate)
 ```
-
-Current migrations:
-- `001_initial_schema.py` — Creates all 11 tables listed above
-- `002_add_daily_goal_to_users.py` — Adds `daily_goal` column to users table
