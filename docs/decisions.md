@@ -52,6 +52,38 @@
 **Decision**: React Native with Expo SDK.
 **Consequences**: Share API client and types with Next.js web app. Massive npm ecosystem. Expo handles build, deploy, OTA updates. Trade-off: React Native performance is slightly lower than Flutter for heavy animations, but Reanimated library closes the gap for our use case.
 
+## ADR-007: Multi-Mode Course Support (Video + Quiz)
+
+**Status**: Approved
+**Date**: 2026-03-09
+**Context**: Platform expanding to include math courses with Khan Academy-style
+video → quiz flow. Users watch teacher video, reach 80% completion, quiz unlocks,
+quiz reuses existing exercise system.
+**Decision**:
+- Add course_type column to courses table ('language', 'math', extensible)
+- Add content_mode column ('exercise', 'video_quiz')
+- New video_lessons and video_progress tables (Phase 3)
+- Reuse existing exercise system for post-video quizzes
+- Video storage uses abstraction layer (VideoStorage class):
+  - Development: local mp4 files served via FastAPI static files
+  - Production: Mux (adaptive bitrate, engagement analytics)
+  - Switch via VIDEO_BACKEND env var — zero code changes needed
+- Mobile uses expo-av which plays both local mp4 and Mux HLS streams
+**Consequences**: Phase 3 is fully testable without external services.
+Production deployment only requires env var change + video upload migration.
+Engagement analytics (watch drop-off points) only available with Mux in production.
+
+## ADR-008: Phase Reordering — Math Before Web
+
+**Status**: Approved
+**Date**: 2026-03-09
+**Context**: Originally web app was Phase 3. Math/video was planned for later.
+Building web without math means rebuilding web UI when math is added.
+**Decision**: Move math/video to Phase 3 (split into 3A backend + 3B mobile).
+Web app becomes Phase 4 and builds the complete product (language + math) once.
+**Consequences**: Mobile app launches with both content types. Web app has
+more features on day one but ships later. No rework on web UI.
+
 ---
 
 > Add new ADRs as `ADR-NNN: Title` with Status, Date, Context, Decision, Consequences.

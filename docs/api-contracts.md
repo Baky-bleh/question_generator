@@ -399,14 +399,64 @@ Get current user's streak info.
 
 ---
 
+## Planned Endpoints (Phase 3)
+
+These endpoints will be built in Phase 3. Listed here so mobile and web
+teams can plan their UI ahead of time.
+
+### `GET /api/v1/video-lessons/{video_lesson_id}`
+Get video lesson metadata and playback URL.
+- **Auth**: Required
+- **Response** `200`:
+  ```json
+  {
+    "id": "uuid",
+    "title": "Understanding Variables",
+    "video_url": "string (local path or Mux HLS URL)",
+    "duration_seconds": 750,
+    "thumbnail_url": "string | null",
+    "teacher_name": "string | null",
+    "quiz_id": "string | null",
+    "watch_threshold_percent": 80,
+    "user_progress": {
+      "watch_percent": 45,
+      "last_position_seconds": 337,
+      "completed": false,
+      "quiz_unlocked": false
+    }
+  }
+  ```
+
+### `POST /api/v1/video-lessons/{video_lesson_id}/progress`
+Report video watch progress. Called every 30 seconds during playback.
+- **Auth**: Required
+- **Request**: `{ "position_seconds": 337, "watch_percent": 45 }`
+- **Response** `200`:
+  ```json
+  { "watch_percent": 45, "completed": false, "quiz_unlocked": false }
+  ```
+- **Notes**: When watch_percent crosses threshold, quiz_unlocked becomes true.
+
+### `GET /api/v1/video-lessons/{video_lesson_id}/quiz`
+Get quiz exercises for this video lesson. Returns 403 if video not sufficiently watched.
+- **Auth**: Required
+- **Response** `200`: Same exercise JSON format as language lessons
+- **Errors**: `403 video watch threshold not met`
+- **Notes**: Quiz submission and completion use existing lesson endpoints
+  (POST /lessons/{quiz_id}/submit and POST /lessons/{quiz_id}/complete)
+
+---
+
 ## Not Yet Implemented
 
 The following endpoints from the original design are **not yet built** (planned for future phases):
 
-- `GET /api/v1/leaderboard/weekly` — Leaderboard rankings (Phase 5: Gamification)
-- `GET /api/v1/subscription/status` — Subscription status (Phase 4: Monetization)
-- `POST /api/v1/subscription/verify` — Purchase verification (Phase 4: Monetization)
-- `POST /api/v1/webhooks/revenuecat` — RevenueCat webhook (Phase 4: Monetization)
+- Video lesson endpoints (Phase 3A)
+- Math exercise types (Phase 3A)
+- `GET /api/v1/leaderboard/weekly` — Leaderboard rankings (Phase 6: Gamification)
+- `GET /api/v1/subscription/status` — Subscription status (Phase 5: Monetization)
+- `POST /api/v1/subscription/verify` — Purchase verification (Phase 5: Monetization)
+- `POST /api/v1/webhooks/revenuecat` — RevenueCat webhook (Phase 5: Monetization)
 
 **Note**: The `subscriptions` module has a database model (`src/subscriptions/models.py`) but no router or service yet.
 

@@ -4,7 +4,20 @@
 > This document tracks what's built, what's in progress, and what's next.
 > New agents: READ THIS FIRST to understand the current state of the project.
 
-## Current Phase: 1 — Backend Core (COMPLETE)
+## Current Phase: 2 — Mobile App (IN PROGRESS)
+
+## Phase Order
+
+| Phase | Name | Status |
+|-------|------|--------|
+| Phase 1 | Backend Core (language) | ✅ COMPLETE |
+| Phase 2 | Mobile App (language + mascot) | 🔄 IN PROGRESS |
+| Phase 3A | Math Backend (video tables, endpoints, VideoStorage) | 🔲 NOT STARTED |
+| Phase 3B | Math Mobile (video player, quiz flow, skill tree update) | 🔲 NOT STARTED |
+| Phase 4 | Web App (language + math — full product) | 🔲 NOT STARTED |
+| Phase 5 | Monetization (ads, subscriptions, RevenueCat) | 🔲 NOT STARTED |
+| Phase 6 | Gamification (leaderboards, achievements, leagues) | 🔲 NOT STARTED |
+| Phase 7 | QA, Polish & Launch | 🔲 NOT STARTED |
 
 ---
 
@@ -123,16 +136,16 @@
 
 ### What Was NOT Built (Deferred)
 
-- `src/gamification/` — Leaderboards, leagues, achievement triggers (Phase 5)
-- `src/notifications/` — Push notification triggers (Phase 5)
-- `src/subscriptions/service.py` + `router.py` — Subscription API, RevenueCat webhook (Phase 4)
-- Leaderboard endpoint (`GET /api/v1/leaderboard/weekly`) — Phase 5
-- Subscription endpoints (`GET /subscription/status`, `POST /subscription/verify`) — Phase 4
-- Webhook endpoint (`POST /webhooks/revenuecat`) — Phase 4
+- `src/gamification/` — Leaderboards, leagues, achievement triggers (Phase 6)
+- `src/notifications/` — Push notification triggers (Phase 6)
+- `src/subscriptions/service.py` + `router.py` — Subscription API, RevenueCat webhook (Phase 5)
+- Leaderboard endpoint (`GET /api/v1/leaderboard/weekly`) — Phase 6
+- Subscription endpoints (`GET /subscription/status`, `POST /subscription/verify`) — Phase 5
+- Webhook endpoint (`POST /webhooks/revenuecat`) — Phase 5
 
 ---
 
-## Phase 2 — Mobile App 🔲 NOT STARTED
+## Phase 2 — Mobile App 🔄 IN PROGRESS
 **Weeks 7-10 | React Native + Expo**
 
 ### Prerequisites from Phase 1
@@ -161,40 +174,46 @@
 
 ---
 
-## Phase 3 — Web App 🔲 NOT STARTED
-**Weeks 11-13 | Next.js**
+## Phase 3A — Math Backend 🔲 NOT STARTED
+**Video tables, endpoints, VideoStorage abstraction**
 
-### Prerequisites from Phase 1 + 2
-- ✅ All API endpoints working
-- 🔲 Shared API client generated and tested from mobile phase
-- 🔲 Component patterns established (can reference mobile implementations)
+Details TBD — plan will be created before this phase starts.
 
----
-
-## Phase 4 — Monetization 🔲 NOT STARTED
-**Weeks 14-16 | RevenueCat + AdMob + Stripe**
-
-### Prerequisites
-- ✅ Full auth flow on all platforms (backend done; client pending Phase 2/3)
-- ✅ Backend subscription model in DB
+See `docs/video-architecture.md` for the video system design.
 
 ---
 
-## Phase 5 — Gamification 🔲 NOT STARTED
-**Weeks 17-19 | Redis + Backend + Client UI**
+## Phase 3B — Math Mobile 🔲 NOT STARTED
+**Video player, quiz flow, skill tree update**
 
-### Prerequisites
-- ✅ XP system working end-to-end
-- ✅ Redis connected and working for streaks
+Details TBD — plan will be created before this phase starts.
 
 ---
 
-## Phase 6 — QA & Launch 🔲 NOT STARTED
-**Weeks 20-22+**
+## Phase 4 — Web App 🔲 NOT STARTED
+**Language + math — full product on Next.js**
 
-### Prerequisites
-- 🔲 All features implemented
-- 🔲 Basic test coverage exists (backend coverage done)
+Details TBD — plan will be created before this phase starts.
+
+---
+
+## Phase 5 — Monetization 🔲 NOT STARTED
+**Ads, subscriptions, RevenueCat**
+
+Details TBD — plan will be created before this phase starts.
+
+---
+
+## Phase 6 — Gamification 🔲 NOT STARTED
+**Leaderboards, achievements, leagues**
+
+Details TBD — plan will be created before this phase starts.
+
+---
+
+## Phase 7 — QA, Polish & Launch 🔲 NOT STARTED
+
+Details TBD — plan will be created before this phase starts.
 
 ---
 

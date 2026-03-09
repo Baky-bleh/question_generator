@@ -1,12 +1,15 @@
-# LinguaLeap — Language Learning Platform
+# LinguaLeap — Language & Math Learning Platform
 
-> Duolingo-style web & mobile app. Free 3-month trial → ad-supported → premium subscription.
+> Language learning + math/video education platform. Duolingo-style exercises
+> for language, Khan Academy-style video lessons + quizzes for math.
+> Free 3-month trial → ad-supported → premium subscription.
 
 ## Quick Context
 
 - **Backend**: FastAPI (Python 3.12+) · PostgreSQL · Redis · S3
 - **Mobile**: React Native + Expo SDK 52+ · Expo Router · TypeScript
 - **Web**: Next.js 14+ (App Router) · TypeScript · Tailwind CSS
+- **Video**: Local mp4 (dev) → Mux (production), abstracted via VideoStorage
 - **Payments**: RevenueCat (mobile) · Stripe (web) · Google AdMob/AdSense
 - **Infra**: Docker Compose (local) · Railway (API) · Vercel (web) · Supabase (DB) · Upstash (Redis)
 
@@ -24,6 +27,7 @@
 | [docs/phase-status.md](docs/phase-status.md) | What's built, what's in progress, what's next | Always read first |
 | [docs/agent-teams.md](docs/agent-teams.md) | Team configs, spawn prompts per phase | When starting a new agent team |
 | [docs/decisions.md](docs/decisions.md) | Architecture Decision Records (ADRs) | When making or questioning a design choice |
+| [docs/video-architecture.md](docs/video-architecture.md) | Video system design, storage abstraction, Mux migration | When working on video/math features |
 
 ## Project Structure
 
@@ -48,6 +52,7 @@ lingualeap/
 │   │   ├── srs/                 ← Spaced repetition engine (SM-2)
 │   │   ├── streaks/             ← Streak logic, timezone handling
 │   │   ├── gamification/        ← Achievements, leaderboards, leagues
+│   │   ├── video/               ← Video storage abstraction, upload, progress
 │   │   ├── subscriptions/       ← RevenueCat webhooks, feature flags
 │   │   └── notifications/       ← Push notification triggers
 │   ├── tests/
@@ -83,6 +88,7 @@ lingualeap/
 ├── content/                     ← Course content source files
 │   ├── courses/                 ← Course JSON definitions
 │   ├── audio/                   ← Audio files for listening exercises
+│   ├── videos/                  ← Video files (local dev) and metadata
 │   ├── schemas/                 ← JSON schemas for exercise types
 │   └── build.py                 ← Content build & validation script
 ├── infra/                       ← Infrastructure configs

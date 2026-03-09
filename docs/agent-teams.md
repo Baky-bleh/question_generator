@@ -744,23 +744,58 @@ Teammate "home-progress" — Home, Course View & Profile:
 
 ---
 
-## Phase 3–6 Teams
+## Phase 3A: Math Backend
+
+**3 agents + lead. Run after Phase 2 complete + doc-sync.**
+
+Agents:
+- "video-infra" — video_lessons model, video_progress model, Alembic migration,
+  VideoStorage abstraction (local + mux backends), update courses model with
+  course_type/content_mode columns
+- "video-api" — video lesson endpoints (GET, POST progress, GET quiz),
+  quiz gating logic (403 if < 80%), extend course detail for video courses
+- "math-content" — math exercise types (number_input if needed),
+  sample "Algebra Basics" course JSON, sample quiz exercises,
+  placeholder mp4 video files in content/videos/
+
+Detailed spawn prompts will be written after Phase 3 plan is created.
+
+---
+
+## Phase 3B: Math Mobile
+
+**3 agents + lead. Run after Phase 3A complete + doc-sync.**
+
+Agents:
+- "video-player" — VideoPlayer component (expo-av), custom controls,
+  progress reporting hook, resume-from-position, fullscreen
+- "quiz-flow" — QuizLockBanner, QuizIntroScreen, quiz unlock check,
+  adapt existing LessonPlayer to work as quiz mode
+- "skill-tree-update" — update SkillTree to render video lessons
+  (thumbnail + duration + watch progress ring), handle both course_type modes
+
+Detailed spawn prompts will be written after Phase 3 plan is created.
+
+---
+
+## Phase 4–7 Teams
 
 Follow the same prompt template pattern. Key additions for each phase:
 
-**Phase 3 (Web)**: Add a "web-ux" teammate that adapts the mobile design system
+**Phase 4 (Web)**: Add a "web-ux" teammate that adapts the mobile design system
 for web. The mascot uses Lottie-web or CSS animations instead of Reanimated.
-Include keyboard shortcuts for the lesson player.
+Include keyboard shortcuts for the lesson player. Web builds for both
+language + math content modes from day one.
 
-**Phase 4 (Monetization)**: Add a "paywall-ux" teammate that designs the premium
+**Phase 5 (Monetization)**: Add a "paywall-ux" teammate that designs the premium
 upsell screens, ad placement UX, and the "your trial expires in X days" banners.
 Mascot appears in subscription prompts ("Upgrade to keep me happy!").
 
-**Phase 5 (Gamification)**: Add a "gamification-ux" teammate for leaderboard UI,
+**Phase 6 (Gamification)**: Add a "gamification-ux" teammate for leaderboard UI,
 achievement animations, XP celebration screens, league promotion/demotion modals.
 Heavy mascot integration — mascot reacts to every gamification event.
 
-**Phase 6 (QA)**: Include a "ux-review" agent that audits visual consistency,
+**Phase 7 (QA)**: Include a "ux-review" agent that audits visual consistency,
 checks mascot appears in all required locations, validates dark mode support,
 and tests responsive layouts on different screen sizes.
 

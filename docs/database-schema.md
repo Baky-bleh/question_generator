@@ -67,6 +67,8 @@ Course metadata (content lives on S3/local filesystem). Source: `src/courses/mod
 | title | VARCHAR(255) | NOT NULL | |
 | description | TEXT | NULLABLE | |
 | thumbnail_url | VARCHAR(500) | NULLABLE | |
+| course_type | VARCHAR(20) | NOT NULL, default 'language' | 'language', 'math', 'science' (extensible) |
+| content_mode | VARCHAR(20) | NOT NULL, default 'exercise' | 'exercise' (language), 'video_quiz' (math) |
 | content_version | VARCHAR(50) | NOT NULL | Semver, maps to content path |
 | total_units | INT | NOT NULL | |
 | total_lessons | INT | NOT NULL | |
@@ -209,6 +211,47 @@ Unique constraint: `(user_id, achievement_type)` — name `uq_user_achievement`
 | `leaderboard:weekly:{league}` | Sorted Set | Reset Monday 00:00 UTC | Weekly XP rankings (Phase 5) |
 | `features:{user_id}` | Hash | 5 min | `{show_ads, has_premium, streak_freeze}` (Phase 4) |
 | `session:{token_jti}` | String | 15 min | Active session validation (not implemented) |
+
+---
+
+## Planned Tables (Phase 3)
+
+> These tables will be created when Phase 3 (Math/Video Courses) is implemented. Listed here for planning purposes.
+
+### video_lessons
+Video content metadata and quiz associations. Not yet created. Source: `src/video/models.py` (planned)
+| Column | Type | Constraints | Notes |
+|--------|------|------------|-------|
+| id | UUID | PK | |
+| course_id | UUID | FK → courses, INDEX | |
+| unit_order | INT | NOT NULL | |
+| lesson_order | INT | NOT NULL | |
+| title | VARCHAR(255) | NOT NULL | |
+| description | TEXT | NULLABLE | |
+| video_url | VARCHAR(500) | NOT NULL | Local path (dev) or Mux HLS URL (prod) |
+| video_duration_seconds | INT | NOT NULL | |
+| thumbnail_url | VARCHAR(500) | NULLABLE | |
+| teacher_name | VARCHAR(100) | NULLABLE | |
+| transcript_url | VARCHAR(500) | NULLABLE | For accessibility and search |
+| quiz_id | VARCHAR(100) | NULLABLE | Links to quiz exercises (same format as lessons) |
+| watch_threshold_percent | INT | NOT NULL, default 80 | % required before quiz unlocks |
+| created_at | TIMESTAMP WITH TZ | NOT NULL | |
+| updated_at | TIMESTAMP WITH TZ | NOT NULL | |
+
+### video_progress
+Per-user video watch tracking and quiz unlock state. Not yet created. Source: `src/video/models.py` (planned)
+| Column | Type | Constraints | Notes |
+|--------|------|------------|-------|
+| id | UUID | PK | |
+| user_id | UUID | FK → users, INDEX | |
+| video_lesson_id | UUID | FK → video_lessons, INDEX | |
+| watch_percent | INT | NOT NULL, default 0 | 0-100 |
+| last_position_seconds | INT | NOT NULL, default 0 | Resume playback from here |
+| completed | BOOLEAN | NOT NULL, default false | True when watch_percent >= threshold |
+| completed_at | TIMESTAMP WITH TZ | NULLABLE | |
+| created_at | TIMESTAMP WITH TZ | NOT NULL | |
+| updated_at | TIMESTAMP WITH TZ | NOT NULL | |
+| | | UNIQUE(user_id, video_lesson_id) | |
 
 ---
 

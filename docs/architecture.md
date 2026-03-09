@@ -24,10 +24,11 @@ LinguaLeap is a client-server application with one backend API serving two clien
             │   │   │
      ┌──────┘   │   └──────┐
      ▼          ▼          ▼
-┌─────────┐ ┌───────┐ ┌─────────┐
-│PostgreSQL│ │ Redis │ │  S3/CDN │
-│(Supabase)│ │(Upstash│ │(Content)│
-└─────────┘ └───────┘ └─────────┘
+┌─────────┐ ┌───────┐ ┌─────────┐ ┌─────────────┐
+│PostgreSQL│ │ Redis │ │  S3/CDN │ │  Mux (prod)  │
+│(Supabase)│ │(Upstash│ │(Content)│ │  or local    │
+└─────────┘ └───────┘ └─────────┘ │  (dev)       │
+                                   └─────────────┘
 ```
 
 ## Backend Architecture (Phase 1)
@@ -113,6 +114,41 @@ Type aliases for convenience: `DbSession`, `RedisClient`, `CurrentSettings`, `Us
 3. On reconnect: client pushes queued completions to API
 4. Conflict resolution: server wins for XP (anti-cheat), client wins for completion status
 
+## Planned: Video Course Mode (Phase 3)
+
+Math courses use a video-first learning model:
+1. Client requests video lesson → API returns video metadata + playback URL
+2. Client streams video from local server (dev) or Mux CDN (prod)
+3. Client reports watch progress every 30 seconds → API updates video_progress
+4. At 80% watched → quiz unlocks
+5. Quiz exercises use same flow as language lessons (submit → complete → XP)
+
+### Video Storage Abstraction
+
+`VideoStorage` class in `src/video/storage.py` abstracts the storage backend:
+- `VIDEO_BACKEND=local` → serves mp4 from `content/videos/` via FastAPI static files
+- `VIDEO_BACKEND=mux` → uploads to Mux API, returns HLS stream URL
+
+Mobile app receives a URL from the API and plays it with expo-av.
+The app never knows which backend is active.
+
+See `docs/video-architecture.md` for full details.
+
+### New Service Boundaries (Phase 3)
+
+| Service | Owns | Depends On |
+|---------|------|-----------|
+| Video Lessons | Video metadata, playback URLs, watch progress | VideoStorage, PostgreSQL |
+| Video Progress | Watch tracking, quiz gating (80% threshold) | PostgreSQL, Redis (cache) |
+| Quiz (reuses Lessons) | Post-video assessment exercises | Exercise validators, Progress |
+
+### New External Services (Production)
+
+| Service | Purpose | When |
+|---------|---------|------|
+| Mux | Adaptive video streaming + engagement analytics | Production only |
+| Mux Data | Watch time, drop-off points, buffering metrics | Production only |
+
 ## Service Boundaries
 
 | Service | Directory | Status | Owns | Depends On |
@@ -127,6 +163,7 @@ Type aliases for convenience: `DbSession`, `RedisClient`, `CurrentSettings`, `Us
 | Subscriptions | `src/subscriptions/` | ⚠️ Model only | Payment state, feature flags | PostgreSQL, Redis, RevenueCat |
 | Gamification | `src/gamification/` | 🔲 Not started | Leaderboards, achievements, leagues | Redis, PostgreSQL, Progress |
 | Notifications | `src/notifications/` | 🔲 Not started | Push triggers, scheduling | FCM, Auth, Streaks |
+| Video | `src/video/` | 🔲 Phase 3 | Video lesson serving, VideoStorage abstraction, watch progress | VideoStorage (local/Mux), PostgreSQL |
 
 ## Content Pipeline
 
@@ -183,4 +220,5 @@ See `docs/decisions.md` for full ADRs. Summary:
 | Google AdMob | Mobile ads | App ID | 🔲 Phase 4 |
 | Google AdSense | Web ads | Publisher ID | 🔲 Phase 4 |
 | Firebase (FCM) | Push notifications | Service account key | 🔲 Phase 5 |
+| Mux | Video streaming + analytics (production only) | API token (`MUX_TOKEN_ID`, `MUX_TOKEN_SECRET`) | 🔲 Phase 3 (prod) |
 | CloudFront | CDN for content | Public/signed URLs | 🔲 Production setup |
