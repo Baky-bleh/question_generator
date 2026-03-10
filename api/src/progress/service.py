@@ -84,12 +84,9 @@ class ProgressService:
 
         # Update enrollment position if this lesson advances the user
         if enrollment is not None:
-            if (
-                unit_order > enrollment.current_unit_order
-                or (
-                    unit_order == enrollment.current_unit_order
-                    and lesson_order >= enrollment.current_lesson_order
-                )
+            if unit_order > enrollment.current_unit_order or (
+                unit_order == enrollment.current_unit_order
+                and lesson_order >= enrollment.current_lesson_order
             ):
                 enrollment.current_unit_order = unit_order
                 enrollment.current_lesson_order = lesson_order + 1
@@ -100,9 +97,7 @@ class ProgressService:
         await self._db.flush()
 
         # Resolve next_lesson via ContentLoader (if available)
-        next_lesson = await self._resolve_next_lesson(
-            course_id, unit_order, lesson_order
-        )
+        next_lesson = await self._resolve_next_lesson(course_id, unit_order, lesson_order)
 
         return LessonCompleteResponse(
             xp_earned=xp.total,
@@ -120,9 +115,7 @@ class ProgressService:
         """Get overall progress summary for a user."""
         # Total XP
         total_xp_result = await self._db.execute(
-            select(func.coalesce(func.sum(XPEvent.amount), 0)).where(
-                XPEvent.user_id == user_id
-            )
+            select(func.coalesce(func.sum(XPEvent.amount), 0)).where(XPEvent.user_id == user_id)
         )
         total_xp = total_xp_result.scalar() or 0
 
@@ -160,11 +153,11 @@ class ProgressService:
             )
 
         # Today stats
-        today_start = datetime.now(timezone.utc).replace(
-            hour=0, minute=0, second=0, microsecond=0
-        )
+        today_start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
         today_lessons_result = await self._db.execute(
-            select(func.count()).select_from(LessonCompletion).where(
+            select(func.count())
+            .select_from(LessonCompletion)
+            .where(
                 LessonCompletion.user_id == user_id,
                 LessonCompletion.completed_at >= today_start,
             )
@@ -195,12 +188,11 @@ class ProgressService:
     ) -> CourseProgressResponse:
         """Get detailed progress for a specific course."""
         # Get course
-        course_result = await self._db.execute(
-            select(Course).where(Course.id == course_id)
-        )
+        course_result = await self._db.execute(select(Course).where(Course.id == course_id))
         course = course_result.scalar_one_or_none()
         if course is None:
             from src.core.exceptions import NotFoundError
+
             raise NotFoundError("Course not found")
 
         # Completed lessons count (distinct lesson_ids)
@@ -300,9 +292,7 @@ class ProgressService:
             loader = ContentLoader(settings)
 
             # Get course slug from DB
-            course_result = await self._db.execute(
-                select(Course).where(Course.id == course_id)
-            )
+            course_result = await self._db.execute(select(Course).where(Course.id == course_id))
             course = course_result.scalar_one_or_none()
             if course is None:
                 return None

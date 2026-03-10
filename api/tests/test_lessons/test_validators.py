@@ -196,6 +196,59 @@ class TestTranslation:
         assert result.correct is True
 
 
+class TestNumberInput:
+    def test_exact_integer(self) -> None:
+        data = {"correct_answer": 5, "tolerance": 0}
+        result = validate_answer("number_input", data, "5")
+        assert result.correct is True
+
+    def test_exact_decimal(self) -> None:
+        data = {"correct_answer": 3.14, "tolerance": 0}
+        result = validate_answer("number_input", data, "3.14")
+        assert result.correct is True
+
+    def test_within_tolerance(self) -> None:
+        data = {"correct_answer": 3.14, "tolerance": 0.01}
+        result = validate_answer("number_input", data, "3.15")
+        assert result.correct is True
+
+    def test_outside_tolerance(self) -> None:
+        data = {"correct_answer": 3.14, "tolerance": 0.01}
+        result = validate_answer("number_input", data, "3.2")
+        assert result.correct is False
+
+    def test_negative_numbers(self) -> None:
+        data = {"correct_answer": -7, "tolerance": 0}
+        result = validate_answer("number_input", data, "-7")
+        assert result.correct is True
+
+    def test_whitespace_handling(self) -> None:
+        data = {"correct_answer": 42, "tolerance": 0}
+        result = validate_answer("number_input", data, "  42  ")
+        assert result.correct is True
+
+    def test_invalid_input(self) -> None:
+        data = {"correct_answer": 5, "tolerance": 0}
+        result = validate_answer("number_input", data, "abc")
+        assert result.correct is False
+
+    def test_list_input(self) -> None:
+        data = {"correct_answer": 10, "tolerance": 0}
+        result = validate_answer("number_input", data, ["10"])
+        assert result.correct is True
+
+    def test_default_tolerance_zero(self) -> None:
+        data = {"correct_answer": 5}
+        result = validate_answer("number_input", data, "5")
+        assert result.correct is True
+
+    def test_correct_answer_in_result(self) -> None:
+        data = {"correct_answer": 8, "tolerance": 0, "explanation": "5 + 3 = 8"}
+        result = validate_answer("number_input", data, "8")
+        assert result.correct_answer == "8"
+        assert result.explanation == "5 + 3 = 8"
+
+
 class TestDispatcher:
     def test_unknown_type_raises(self) -> None:
         with pytest.raises(ValueError, match="Unknown exercise type"):
@@ -209,6 +262,7 @@ class TestDispatcher:
             "listening",
             "word_arrange",
             "translation",
+            "number_input",
         ]
         from src.lessons.validators import _VALIDATORS
 

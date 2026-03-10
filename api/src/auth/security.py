@@ -5,31 +5,31 @@ import secrets
 from datetime import datetime, timedelta, timezone
 from uuid import UUID
 
+import bcrypt
 from jose import JWTError, jwt
-from passlib.context import CryptContext
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 ALGORITHM = "HS256"
 
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+    return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
 
 
 def create_access_token(
     user_id: UUID,
     secret_key: str,
     expires_minutes: int = 15,
+    role: str = "student",
 ) -> str:
     now = datetime.now(timezone.utc)
     payload = {
         "sub": str(user_id),
         "type": "access",
+        "role": role,
         "iat": now,
         "exp": now + timedelta(minutes=expires_minutes),
     }

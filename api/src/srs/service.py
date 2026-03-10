@@ -6,14 +6,16 @@ from datetime import datetime, timedelta, timezone
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.courses.models import Course
 from src.srs.models import SRSItem
 from src.srs.schemas import ReviewItemOut, ReviewNextResponse, ReviewSubmitResponse
 from src.srs.sm2 import sm2_algorithm
 
 
 class SRSService:
-    def __init__(self, db: AsyncSession) -> None:
+    def __init__(self, db: AsyncSession, base_url: str = "") -> None:
         self._db = db
+        self._base_url = base_url.rstrip("/")
 
     async def get_due_items(
         self,
@@ -50,12 +52,24 @@ class SRSService:
 
         total_due = (await self._db.execute(count_stmt)).scalar() or 0
 
+        # Build course slug lookup for content URLs
+        course_slugs: dict[uuid.UUID, str] = {}
+        if items:
+            course_ids = {item.course_id for item in items}
+            courses_result = await self._db.execute(
+                select(Course).where(Course.id.in_(course_ids))
+            )
+            for course in courses_result.scalars().all():
+                course_slugs[course.id] = f"{course.language_to}-{course.language_from}"
+
         return ReviewNextResponse(
             items=[
                 ReviewItemOut(
                     concept_id=item.concept_id,
                     concept_type=item.concept_type,
-                    content_url="",
+                    content_url=self._build_review_content_url(
+                        item.concept_id, course_slugs.get(item.course_id, "")
+                    ),
                     ease_factor=item.ease_factor,
                     interval_days=item.interval_days,
                     review_count=item.repetition_count,
@@ -64,6 +78,12 @@ class SRSService:
             ],
             total_due=total_due,
         )
+
+    def _build_review_content_url(self, concept_id: str, course_slug: str) -> str:
+        """Build content URL for a review item's concept."""
+        if not course_slug:
+            return ""
+        return f"{self._base_url}/content/courses/{course_slug}/manifest.json"
 
     async def submit_review(
         self,

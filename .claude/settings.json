@@ -3,35 +3,13 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "hooks": {
-    "SessionStart": [
+    "PostToolUse": [
       {
-        "matcher": "",
+        "matcher": "Write|Edit|MultiEdit",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 /Users/baky/Documents/learning-platform/.claude/hooks/PreSession.sh"
-          }
-        ]
-      }
-    ],
-    "TaskCompleted": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 /Users/baky/Documents/learning-platform/.claude/hooks/TaskCompleted.sh"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "jq -r '.tool_input.file_path // empty' | { read fp; if [ \"$fp\" = 'CLAUDE.md' ] || [ \"$fp\" = '.claude/settings.json' ]; then echo '{\"decision\":\"deny\",\"reason\":\"Protected file.\"}'; else echo '{\"decision\":\"approve\"}'; fi; }"
+            "command": "python3 /Users/baky/Documents/claude-workspace/custom-skills/claude-agent-toolkit/hooks/auto_format.py"
           }
         ]
       }

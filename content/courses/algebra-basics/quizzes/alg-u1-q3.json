@@ -1,0 +1,69 @@
+{
+  "id": "alg-u1-q3",
+  "title": "Quiz: Combining Like Terms",
+  "exercises": [
+    {
+      "id": "alg-u1-q3-e1",
+      "type": "multiple_choice",
+      "prompt": "Which terms are 'like terms'?",
+      "choices": ["3x and 3y", "5x and 2x", "x and x²", "2 and 2x"],
+      "correct_index": 1,
+      "explanation": "Like terms have the same variable raised to the same power. 5x and 2x both have x to the first power."
+    },
+    {
+      "id": "alg-u1-q3-e2",
+      "type": "number_input",
+      "prompt": "Simplify: 3x + 5x. What is the coefficient of x in the result?",
+      "correct_answer": 8,
+      "tolerance": 0,
+      "explanation": "3x + 5x = (3 + 5)x = 8x. The coefficient is 8."
+    },
+    {
+      "id": "alg-u1-q3-e3",
+      "type": "fill_blank",
+      "prompt": "To combine like terms, you add or subtract the ___.",
+      "correct_answers": ["coefficients", "coefficient"],
+      "explanation": "When combining like terms, you add or subtract the coefficients while keeping the variable the same."
+    },
+    {
+      "id": "alg-u1-q3-e4",
+      "type": "number_input",
+      "prompt": "Simplify: 7y - 3y. What is the coefficient of y?",
+      "correct_answer": 4,
+      "tolerance": 0,
+      "explanation": "7y - 3y = (7 - 3)y = 4y. The coefficient is 4."
+    },
+    {
+      "id": "alg-u1-q3-e5",
+      "type": "multiple_choice",
+      "prompt": "Simplify: 2x + 3 + 5x + 1",
+      "choices": ["7x + 4", "10x + 1", "7x + 3", "11x"],
+      "correct_index": 0,
+      "explanation": "Combine like terms: (2x + 5x) + (3 + 1) = 7x + 4"
+    },
+    {
+      "id": "alg-u1-q3-e6",
+      "type": "number_input",
+      "prompt": "Simplify: 10a - 4a + 2a. What is the coefficient of a?",
+      "correct_answer": 8,
+      "tolerance": 0,
+      "explanation": "10a - 4a + 2a = (10 - 4 + 2)a = 8a"
+    },
+    {
+      "id": "alg-u1-q3-e7",
+      "type": "multiple_choice",
+      "prompt": "Which expression is fully simplified?",
+      "choices": ["3x + 2x + 1", "5x + 1", "3x + 2x + x", "x + x"],
+      "correct_index": 1,
+      "explanation": "5x + 1 has no like terms left to combine, so it is fully simplified."
+    },
+    {
+      "id": "alg-u1-q3-e8",
+      "type": "number_input",
+      "prompt": "Simplify: 4x + 2y + 3x. What is the coefficient of x?",
+      "correct_answer": 7,
+      "tolerance": 0,
+      "explanation": "4x + 3x = 7x. The 2y stays separate since it is not a like term. Result: 7x + 2y."
+    }
+  ]
+}

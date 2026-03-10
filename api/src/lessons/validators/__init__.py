@@ -5,6 +5,7 @@ from .fill_blank import validate_fill_blank
 from .listening import validate_listening
 from .matching import validate_matching
 from .multiple_choice import validate_multiple_choice
+from .number_input import validate_number_input
 from .translation import validate_translation
 from .word_arrange import validate_word_arrange
 
@@ -14,6 +15,7 @@ _VALIDATORS: dict[str, object] = {
     "fill_blank": validate_fill_blank,
     "matching": validate_matching,
     "listening": validate_listening,
+    "number_input": validate_number_input,
     "word_arrange": validate_word_arrange,
     "translation": validate_translation,
 }

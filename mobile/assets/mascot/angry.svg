@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Linguo the Fox - Angry (playful, not scary) -->
+  <ellipse cx="60" cy="170" rx="35" ry="15" fill="#FF8C42" transform="rotate(-20, 60, 170)"/>
+  <ellipse cx="42" cy="165" rx="12" ry="8" fill="#FFFFFF" transform="rotate(-20, 42, 165)"/>
+  <ellipse cx="100" cy="150" rx="40" ry="35" fill="#FF8C42"/>
+  <ellipse cx="100" cy="155" rx="28" ry="25" fill="#FFD4A8"/>
+  <!-- Crossed arms -->
+  <ellipse cx="75" cy="145" rx="10" ry="16" fill="#FF8C42" transform="rotate(20, 75, 145)"/>
+  <ellipse cx="125" cy="145" rx="10" ry="16" fill="#FF8C42" transform="rotate(-20, 125, 145)"/>
+  <circle cx="100" cy="90" r="40" fill="#FF8C42"/>
+  <polygon points="68,60 58,20 88,50" fill="#FF8C42"/>
+  <polygon points="72,55 64,28 85,50" fill="#FFD4A8"/>
+  <polygon points="132,60 142,20 112,50" fill="#FF8C42"/>
+  <polygon points="128,55 136,28 115,50" fill="#FFD4A8"/>
+  <ellipse cx="100" cy="100" rx="30" ry="25" fill="#FFD4A8"/>
+  <!-- Angry eyes -->
+  <circle cx="85" cy="87" r="5" fill="#3C3C3C"/>
+  <circle cx="115" cy="87" r="5" fill="#3C3C3C"/>
+  <circle cx="86" cy="85" r="1.5" fill="#FFFFFF"/>
+  <circle cx="116" cy="85" r="1.5" fill="#FFFFFF"/>
+  <!-- Angry eyebrows -->
+  <path d="M76,78 L92,82" stroke="#3C3C3C" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M124,78 L108,82" stroke="#3C3C3C" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <ellipse cx="100" cy="97" rx="5" ry="3.5" fill="#3C3C3C"/>
+  <!-- Pout -->
+  <path d="M90,107 Q100,102 110,107" stroke="#3C3C3C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Red cheeks (frustrated) -->
+  <circle cx="75" cy="98" r="6" fill="#FF6B6B" opacity="0.3"/>
+  <circle cx="125" cy="98" r="6" fill="#FF6B6B" opacity="0.3"/>
+</svg>

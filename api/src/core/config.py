@@ -35,6 +35,13 @@ class Settings(BaseSettings):
     # Content
     CONTENT_DIR: str = "../content"
 
+    # Video
+    VIDEO_BACKEND: str = "local"
+    VIDEO_LOCAL_DIR: str = "content/videos"
+    MUX_TOKEN_ID: str = ""
+    MUX_TOKEN_SECRET: str = ""
+    MUX_WEBHOOK_SECRET: str = ""
+
     # App
     APP_ENV: str = "development"
     DEBUG: bool = True

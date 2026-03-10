@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from uuid import UUID
 
 from redis.asyncio import Redis
@@ -26,9 +26,7 @@ class AuthService:
         self.redis = redis
         self.settings = settings
 
-    async def register(
-        self, email: str, password: str, display_name: str
-    ) -> TokenResponse:
+    async def register(self, email: str, password: str, display_name: str) -> TokenResponse:
         stmt = select(User).where(User.email == email)
         result = await self.db.execute(stmt)
         if result.scalar_one_or_none() is not None:
@@ -62,7 +60,7 @@ class AuthService:
         stmt = select(RefreshToken).where(
             RefreshToken.token_hash == token_hash,
             RefreshToken.revoked_at.is_(None),
-            RefreshToken.expires_at > datetime.now(timezone.utc),
+            RefreshToken.expires_at > datetime.utcnow(),
         )
         result = await self.db.execute(stmt)
         token_record = result.scalar_one_or_none()
@@ -71,7 +69,7 @@ class AuthService:
             raise UnauthorizedError("Invalid or expired refresh token")
 
         # Rotate: revoke old token
-        token_record.revoked_at = datetime.now(timezone.utc)
+        token_record.revoked_at = datetime.utcnow()
 
         access_token = create_access_token(
             user_id=token_record.user_id,
@@ -95,7 +93,7 @@ class AuthService:
         token_record = result.scalar_one_or_none()
 
         if token_record is not None:
-            token_record.revoked_at = datetime.now(timezone.utc)
+            token_record.revoked_at = datetime.utcnow()
 
     async def oauth_login(self, provider: str, id_token: str) -> TokenResponse:
         if provider == "google":
@@ -154,13 +152,14 @@ class AuthService:
             user_id=user.id,
             secret_key=self.settings.JWT_SECRET_KEY,
             expires_minutes=self.settings.JWT_ACCESS_TOKEN_EXPIRE_MINUTES,
+            role=user.role,
         )
         raw_refresh = create_refresh_token()
 
         refresh_record = RefreshToken(
             user_id=user.id,
             token_hash=hash_token(raw_refresh),
-            expires_at=datetime.now(timezone.utc)
+            expires_at=datetime.utcnow()
             + timedelta(days=self.settings.JWT_REFRESH_TOKEN_EXPIRE_DAYS),
         )
         self.db.add(refresh_record)

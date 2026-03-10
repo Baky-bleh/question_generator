@@ -16,6 +16,7 @@ from src.progress.models import Achievement, LessonCompletion, UserCourseEnrollm
 from src.srs.models import SRSItem  # noqa: F401
 from src.streaks.models import Streak  # noqa: F401
 from src.subscriptions.models import Subscription  # noqa: F401
+from src.video.models import VideoLesson, VideoProgress  # noqa: F401
 
 config = context.config
 

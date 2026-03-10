@@ -1,13 +1,19 @@
 from __future__ import annotations
 
 import uuid
-from datetime import date, timedelta
+from datetime import datetime, timedelta
 from unittest.mock import patch
+from zoneinfo import ZoneInfo
 
 import pytest
 
 from src.streaks.models import Streak
 from src.streaks.service import StreakService
+
+
+def _utc_today():
+    """Get today's date in UTC — matches what the service does with timezone='UTC'."""
+    return datetime.now(ZoneInfo("UTC")).date()
 
 
 @pytest.fixture
@@ -22,7 +28,7 @@ async def user_with_streak(db_session, create_test_user):
         user_id=user.id,
         current_count=5,
         longest_count=10,
-        last_activity_date=date.today() - timedelta(days=1),
+        last_activity_date=_utc_today() - timedelta(days=1),
         freeze_remaining=2,
     )
     db_session.add(streak)
@@ -32,9 +38,7 @@ async def user_with_streak(db_session, create_test_user):
 
 class TestGetStreak:
     @pytest.mark.asyncio
-    async def test_creates_streak_if_none_exists(
-        self, streak_service, create_test_user
-    ) -> None:
+    async def test_creates_streak_if_none_exists(self, streak_service, create_test_user) -> None:
         user = await create_test_user()
         result = await streak_service.get_streak(user.id)
         assert result.current == 0
@@ -42,9 +46,7 @@ class TestGetStreak:
         assert result.today_completed is False
 
     @pytest.mark.asyncio
-    async def test_returns_existing_streak(
-        self, streak_service, user_with_streak
-    ) -> None:
+    async def test_returns_existing_streak(self, streak_service, user_with_streak) -> None:
         user, streak = user_with_streak
         result = await streak_service.get_streak(user.id)
         assert result.current == 5
@@ -58,12 +60,15 @@ class TestGetStreak:
         user = await create_test_user()
         # Manually populate Redis
         key = f"streak:{user.id}"
-        await test_redis.hset(key, mapping={
-            "count": "7",
-            "longest": "15",
-            "freeze_remaining": "1",
-            "today_completed": "1",
-        })
+        await test_redis.hset(
+            key,
+            mapping={
+                "count": "7",
+                "longest": "15",
+                "freeze_remaining": "1",
+                "today_completed": "1",
+            },
+        )
         result = await streak_service.get_streak(user.id)
         assert result.current == 7
         assert result.longest == 15
@@ -72,18 +77,14 @@ class TestGetStreak:
 
 class TestCheckIn:
     @pytest.mark.asyncio
-    async def test_first_ever_check_in(
-        self, streak_service, create_test_user
-    ) -> None:
+    async def test_first_ever_check_in(self, streak_service, create_test_user) -> None:
         user = await create_test_user()
         result = await streak_service.check_in(user.id, "UTC")
         assert result.current == 1
         assert result.today_completed is True
 
     @pytest.mark.asyncio
-    async def test_consecutive_day_extends_streak(
-        self, streak_service, user_with_streak
-    ) -> None:
+    async def test_consecutive_day_extends_streak(self, streak_service, user_with_streak) -> None:
         user, _ = user_with_streak
         result = await streak_service.check_in(user.id, "UTC")
         assert result.current == 6
@@ -98,7 +99,7 @@ class TestCheckIn:
             user_id=user.id,
             current_count=3,
             longest_count=3,
-            last_activity_date=date.today(),
+            last_activity_date=_utc_today(),
         )
         db_session.add(streak)
         await db_session.flush()
@@ -116,7 +117,7 @@ class TestCheckIn:
             user_id=user.id,
             current_count=5,
             longest_count=10,
-            last_activity_date=date.today() - timedelta(days=3),
+            last_activity_date=_utc_today() - timedelta(days=3),
         )
         db_session.add(streak)
         await db_session.flush()
@@ -133,7 +134,7 @@ class TestCheckIn:
             user_id=user.id,
             current_count=5,
             longest_count=10,
-            last_activity_date=date.today() - timedelta(days=2),
+            last_activity_date=_utc_today() - timedelta(days=2),
             freeze_remaining=2,
         )
         db_session.add(streak)
@@ -152,7 +153,7 @@ class TestCheckIn:
             user_id=user.id,
             current_count=5,
             longest_count=10,
-            last_activity_date=date.today() - timedelta(days=2),
+            last_activity_date=_utc_today() - timedelta(days=2),
             freeze_remaining=0,
         )
         db_session.add(streak)
@@ -170,7 +171,7 @@ class TestCheckIn:
             user_id=user.id,
             current_count=10,
             longest_count=10,
-            last_activity_date=date.today() - timedelta(days=1),
+            last_activity_date=_utc_today() - timedelta(days=1),
         )
         db_session.add(streak)
         await db_session.flush()
@@ -180,9 +181,7 @@ class TestCheckIn:
         assert result.longest == 11
 
     @pytest.mark.asyncio
-    async def test_timezone_aware_date(
-        self, streak_service, db_session, create_test_user
-    ) -> None:
+    async def test_timezone_aware_date(self, streak_service, db_session, create_test_user) -> None:
         """Verify that check_in uses user's timezone, not UTC."""
         user = await create_test_user(email="tz@test.com")
         # When timezone matters: test that the function accepts timezone strings

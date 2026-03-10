@@ -1,0 +1,10 @@
+export { IdleFox } from './IdleFox';
+export { HappyFox } from './HappyFox';
+export { CelebratingFox } from './CelebratingFox';
+export { EncouragingFox } from './EncouragingFox';
+export { ThinkingFox } from './ThinkingFox';
+export { SadFox } from './SadFox';
+export { SleepingFox } from './SleepingFox';
+export { AngryFox } from './AngryFox';
+export { WavingFox } from './WavingFox';
+export { TeachingFox } from './TeachingFox';

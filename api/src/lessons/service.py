@@ -18,11 +18,13 @@ XP_PER_CORRECT_ANSWER = 2
 
 class LessonService:
     def __init__(
-        self, db: AsyncSession, content_loader: ContentLoader, settings: Settings
+        self, db: AsyncSession, content_loader: ContentLoader, settings: Settings,
+        base_url: str = "",
     ) -> None:
         self._db = db
         self._content_loader = content_loader
         self._settings = settings
+        self._base_url = base_url.rstrip("/")
 
     async def get_lesson(self, lesson_id: str, course_id: uuid.UUID) -> LessonOut:
         """Get lesson metadata and content URL."""
@@ -45,7 +47,7 @@ class LessonService:
                     content_version = manifest.get("content_version", "v1.0.0")
 
                     content_url = (
-                        f"/content/courses/{course_slug}"
+                        f"{self._base_url}/content/courses/{course_slug}"
                         f"/units/{unit_order}/lessons/{lesson_order}.json"
                     )
 

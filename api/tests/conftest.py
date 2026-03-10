@@ -39,6 +39,7 @@ async def test_engine():
     from src.srs.models import SRSItem  # noqa: F401
     from src.streaks.models import Streak  # noqa: F401
     from src.subscriptions.models import Subscription  # noqa: F401
+    from src.video.models import VideoLesson, VideoProgress  # noqa: F401
 
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)

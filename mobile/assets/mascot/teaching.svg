@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Linguo the Fox - Teaching -->
+  <!-- Light bulb -->
+  <circle cx="155" cy="40" r="12" fill="#FFC800" opacity="0.3"/>
+  <circle cx="155" cy="40" r="8" fill="#FFC800" opacity="0.6"/>
+  <circle cx="155" cy="40" r="4" fill="#FFC800"/>
+  <!-- Rays -->
+  <line x1="155" y1="24" x2="155" y2="18" stroke="#FFC800" stroke-width="2" stroke-linecap="round"/>
+  <line x1="168" y1="40" x2="174" y2="40" stroke="#FFC800" stroke-width="2" stroke-linecap="round"/>
+  <line x1="165" y1="30" x2="170" y2="25" stroke="#FFC800" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="60" cy="170" rx="35" ry="15" fill="#FF8C42" transform="rotate(-20, 60, 170)"/>
+  <ellipse cx="42" cy="165" rx="12" ry="8" fill="#FFFFFF" transform="rotate(-20, 42, 165)"/>
+  <ellipse cx="100" cy="150" rx="40" ry="35" fill="#FF8C42"/>
+  <ellipse cx="100" cy="155" rx="28" ry="25" fill="#FFD4A8"/>
+  <!-- Pointing arm -->
+  <ellipse cx="145" cy="120" rx="8" ry="16" fill="#FF8C42" transform="rotate(-20, 145, 120)"/>
+  <circle cx="100" cy="90" r="40" fill="#FF8C42"/>
+  <polygon points="68,60 58,20 88,50" fill="#FF8C42"/>
+  <polygon points="72,55 64,28 85,50" fill="#FFD4A8"/>
+  <polygon points="132,60 142,20 112,50" fill="#FF8C42"/>
+  <polygon points="128,55 136,28 115,50" fill="#FFD4A8"/>
+  <ellipse cx="100" cy="100" rx="30" ry="25" fill="#FFD4A8"/>
+  <!-- Wise eyes -->
+  <circle cx="85" cy="85" r="6" fill="#3C3C3C"/>
+  <circle cx="115" cy="85" r="6" fill="#3C3C3C"/>
+  <circle cx="87" cy="83" r="2" fill="#FFFFFF"/>
+  <circle cx="117" cy="83" r="2" fill="#FFFFFF"/>
+  <!-- Raised eyebrow -->
+  <path d="M108,76 Q115,72 122,76" stroke="#3C3C3C" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <ellipse cx="100" cy="97" rx="5" ry="3.5" fill="#3C3C3C"/>
+  <!-- Knowing smile -->
+  <path d="M90,103 Q100,111 110,103" stroke="#3C3C3C" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>

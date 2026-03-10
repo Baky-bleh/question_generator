@@ -22,6 +22,7 @@ EXERCISE_TYPES = [
     "listening",
     "word_arrange",
     "translation",
+    "number_input",
 ]
 
 SCHEMA_DIR = Path(__file__).parent / "schemas"
@@ -159,6 +160,97 @@ def validate_manifest(manifest_path: Path) -> tuple[dict | None, list[str]]:
     return manifest, errors
 
 
+def validate_math_course(course_dir: Path) -> list[str]:
+    """Validate a math course directory with video lessons and quizzes."""
+    errors: list[str] = []
+
+    manifest_path = course_dir / "manifest.json"
+    try:
+        with open(manifest_path) as f:
+            manifest = json.load(f)
+    except json.JSONDecodeError as e:
+        return [f"Invalid manifest JSON: {e}"]
+
+    # Load exercise schemas
+    schemas: dict[str, dict] = {}
+    for ex_type in EXERCISE_TYPES:
+        try:
+            schemas[ex_type] = load_schema(ex_type)
+        except FileNotFoundError as e:
+            errors.append(str(e))
+
+    # Track all quiz exercise IDs for uniqueness
+    all_exercise_ids: set[str] = set()
+
+    # Check unit ordering
+    unit_orders: set[int] = set()
+    for unit in manifest.get("units", []):
+        order = unit.get("order")
+        if order in unit_orders:
+            errors.append(f"Duplicate unit order: {order}")
+        unit_orders.add(order)
+
+        # Validate video lessons and their quizzes
+        video_orders: set[int] = set()
+        video_ids: set[str] = set()
+        for video_lesson in unit.get("video_lessons", []):
+            v_order = video_lesson.get("order")
+            if v_order in video_orders:
+                errors.append(f"Unit {order}: Duplicate video lesson order: {v_order}")
+            video_orders.add(v_order)
+
+            vid = video_lesson.get("id")
+            if vid in video_ids:
+                errors.append(f"Unit {order}: Duplicate video lesson ID: '{vid}'")
+            video_ids.add(vid)
+
+            # Check video file reference (warn only)
+            video_file = video_lesson.get("video_file")
+            if video_file:
+                videos_dir = course_dir / "videos"
+                if videos_dir.exists():
+                    video_path = videos_dir / video_file
+                    if not video_path.exists():
+                        print(f"  WARNING: Video file not found: {video_path}")
+
+            # Validate referenced quiz file
+            quiz_id = video_lesson.get("quiz_id")
+            if quiz_id:
+                quiz_path = course_dir / "quizzes" / f"{quiz_id}.json"
+                if not quiz_path.exists():
+                    errors.append(
+                        f"Missing quiz file for video '{vid}': {quiz_path}"
+                    )
+                    continue
+
+                # Validate quiz content
+                try:
+                    with open(quiz_path) as f:
+                        quiz_data = json.load(f)
+                except json.JSONDecodeError as e:
+                    errors.append(f"{quiz_path}: Invalid JSON: {e}")
+                    continue
+
+                # Check quiz ID matches filename
+                if quiz_data.get("id") != quiz_id:
+                    errors.append(
+                        f"Quiz ID mismatch: manifest says '{quiz_id}' "
+                        f"but file says '{quiz_data.get('id')}'"
+                    )
+
+                # Validate exercises in quiz
+                for exercise in quiz_data.get("exercises", []):
+                    eid = exercise.get("id", "")
+                    if eid in all_exercise_ids:
+                        errors.append(f"Duplicate exercise ID across quizzes: '{eid}'")
+                    all_exercise_ids.add(eid)
+
+                    ex_errors = validate_exercise(exercise, schemas)
+                    errors.extend(f"{quiz_id}/{e}" for e in ex_errors)
+
+    return errors
+
+
 def validate_course(course_dir: Path) -> list[str]:
     """Validate all content in a course directory."""
     errors: list[str] = []
@@ -167,6 +259,17 @@ def validate_course(course_dir: Path) -> list[str]:
     if not manifest_path.exists():
         return [f"Missing manifest.json in {course_dir}"]
 
+    # Detect course type from manifest
+    try:
+        with open(manifest_path) as f:
+            manifest_peek = json.load(f)
+    except json.JSONDecodeError as e:
+        return [f"Invalid manifest JSON: {e}"]
+
+    if manifest_peek.get("course_type") == "math":
+        return validate_math_course(course_dir)
+
+    # Language course validation (existing logic)
     manifest, manifest_errors = validate_manifest(manifest_path)
     errors.extend(manifest_errors)
 

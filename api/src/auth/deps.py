@@ -12,7 +12,7 @@ from src.auth.models import User
 from src.auth.security import decode_access_token
 from src.core.config import Settings
 from src.core.deps import get_db, get_settings
-from src.core.exceptions import UnauthorizedError
+from src.core.exceptions import ForbiddenError, UnauthorizedError
 
 bearer_scheme = HTTPBearer()
 
@@ -36,4 +36,22 @@ async def get_current_user(
     if user is None:
         raise UnauthorizedError("User not found")
 
+    return user
+
+
+async def require_teacher(
+    user: User = Depends(get_current_user),
+) -> User:
+    """Require the current user to have teacher or admin role."""
+    if user.role not in ("teacher", "admin"):
+        raise ForbiddenError("Teacher or admin access required")
+    return user
+
+
+async def require_admin(
+    user: User = Depends(get_current_user),
+) -> User:
+    """Require the current user to have admin role."""
+    if user.role != "admin":
+        raise ForbiddenError("Admin access required")
     return user

@@ -1,0 +1,69 @@
+{
+  "id": "alg-u1-q2",
+  "title": "Quiz: Evaluating Expressions",
+  "exercises": [
+    {
+      "id": "alg-u1-q2-e1",
+      "type": "number_input",
+      "prompt": "Evaluate 3x + 1 when x = 2.",
+      "correct_answer": 7,
+      "tolerance": 0,
+      "explanation": "3(2) + 1 = 6 + 1 = 7"
+    },
+    {
+      "id": "alg-u1-q2-e2",
+      "type": "number_input",
+      "prompt": "Evaluate x² when x = 4.",
+      "correct_answer": 16,
+      "tolerance": 0,
+      "explanation": "4² = 4 × 4 = 16"
+    },
+    {
+      "id": "alg-u1-q2-e3",
+      "type": "multiple_choice",
+      "prompt": "What does it mean to 'evaluate an expression'?",
+      "choices": ["Simplify it", "Replace variables with numbers and calculate", "Graph it", "Factor it"],
+      "correct_index": 1,
+      "explanation": "Evaluating means substituting given values for variables and computing the result."
+    },
+    {
+      "id": "alg-u1-q2-e4",
+      "type": "number_input",
+      "prompt": "Evaluate 5a - 3 when a = 4.",
+      "correct_answer": 17,
+      "tolerance": 0,
+      "explanation": "5(4) - 3 = 20 - 3 = 17"
+    },
+    {
+      "id": "alg-u1-q2-e5",
+      "type": "number_input",
+      "prompt": "Evaluate 2x + 3y when x = 3 and y = 1.",
+      "correct_answer": 9,
+      "tolerance": 0,
+      "explanation": "2(3) + 3(1) = 6 + 3 = 9"
+    },
+    {
+      "id": "alg-u1-q2-e6",
+      "type": "multiple_choice",
+      "prompt": "If n = 6, which expression equals 18?",
+      "choices": ["n + 6", "2n", "3n", "n²"],
+      "correct_index": 2,
+      "explanation": "3n = 3 × 6 = 18"
+    },
+    {
+      "id": "alg-u1-q2-e7",
+      "type": "fill_blank",
+      "prompt": "To evaluate 4x when x = 5, you multiply 4 ___ 5.",
+      "correct_answers": ["times", "by", "×"],
+      "explanation": "4x means 4 multiplied by x, so you multiply 4 by 5 to get 20."
+    },
+    {
+      "id": "alg-u1-q2-e8",
+      "type": "number_input",
+      "prompt": "Evaluate (x + y) / 2 when x = 8 and y = 4.",
+      "correct_answer": 6,
+      "tolerance": 0,
+      "explanation": "(8 + 4) / 2 = 12 / 2 = 6"
+    }
+  ]
+}

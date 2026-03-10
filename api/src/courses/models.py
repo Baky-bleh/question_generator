@@ -21,3 +21,5 @@ class Course(Base, TimestampMixin):
     total_units: Mapped[int] = mapped_column(Integer, nullable=False)
     total_lessons: Mapped[int] = mapped_column(Integer, nullable=False)
     is_published: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default="false")
+    course_type: Mapped[str] = mapped_column(String(20), nullable=False, server_default="language")
+    content_mode: Mapped[str] = mapped_column(String(20), nullable=False, server_default="exercise")

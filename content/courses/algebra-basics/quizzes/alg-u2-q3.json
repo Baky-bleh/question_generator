@@ -1,0 +1,69 @@
+{
+  "id": "alg-u2-q3",
+  "title": "Quiz: Word Problems",
+  "exercises": [
+    {
+      "id": "alg-u2-q3-e1",
+      "type": "number_input",
+      "prompt": "A number plus 6 equals 14. What is the number?",
+      "correct_answer": 8,
+      "tolerance": 0,
+      "explanation": "Let x be the number. x + 6 = 14, so x = 14 - 6 = 8"
+    },
+    {
+      "id": "alg-u2-q3-e2",
+      "type": "multiple_choice",
+      "prompt": "Which equation represents: 'Three times a number is 24'?",
+      "choices": ["x + 3 = 24", "x - 3 = 24", "3x = 24", "x / 3 = 24"],
+      "correct_index": 2,
+      "explanation": "'Three times a number' translates to 3x, so the equation is 3x = 24."
+    },
+    {
+      "id": "alg-u2-q3-e3",
+      "type": "number_input",
+      "prompt": "Sam has twice as many apples as Tom. Together they have 18 apples. How many does Tom have?",
+      "correct_answer": 6,
+      "tolerance": 0,
+      "explanation": "Let Tom = x, Sam = 2x. x + 2x = 18 → 3x = 18 → x = 6"
+    },
+    {
+      "id": "alg-u2-q3-e4",
+      "type": "fill_blank",
+      "prompt": "The phrase 'decreased by' in a word problem means you should ___.",
+      "correct_answers": ["subtract", "subtraction"],
+      "explanation": "'Decreased by' indicates subtraction."
+    },
+    {
+      "id": "alg-u2-q3-e5",
+      "type": "number_input",
+      "prompt": "A rectangle has a perimeter of 20 cm. Its length is 7 cm. What is its width in cm?",
+      "correct_answer": 3,
+      "tolerance": 0,
+      "explanation": "Perimeter = 2(length + width). 20 = 2(7 + w) → 10 = 7 + w → w = 3"
+    },
+    {
+      "id": "alg-u2-q3-e6",
+      "type": "multiple_choice",
+      "prompt": "Which phrase translates to 'x / 4'?",
+      "choices": ["Four times a number", "A number minus four", "A number divided by four", "Four more than a number"],
+      "correct_index": 2,
+      "explanation": "'A number divided by four' means x ÷ 4 or x/4."
+    },
+    {
+      "id": "alg-u2-q3-e7",
+      "type": "number_input",
+      "prompt": "Five more than double a number is 17. What is the number?",
+      "correct_answer": 6,
+      "tolerance": 0,
+      "explanation": "2x + 5 = 17 → 2x = 12 → x = 6"
+    },
+    {
+      "id": "alg-u2-q3-e8",
+      "type": "number_input",
+      "prompt": "A taxi charges $3 plus $2 per mile. If the total fare is $15, how many miles was the trip?",
+      "correct_answer": 6,
+      "tolerance": 0,
+      "explanation": "3 + 2m = 15 → 2m = 12 → m = 6"
+    }
+  ]
+}

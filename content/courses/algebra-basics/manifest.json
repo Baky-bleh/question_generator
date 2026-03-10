@@ -1,0 +1,70 @@
+{
+  "course_slug": "algebra-basics",
+  "course_type": "math",
+  "content_mode": "video_quiz",
+  "title": "Algebra Basics",
+  "description": "Learn algebra fundamentals with video lessons and practice quizzes.",
+  "content_version": "v1.0.0",
+  "units": [
+    {
+      "order": 1,
+      "title": "Variables & Expressions",
+      "video_lessons": [
+        {
+          "id": "alg-u1-v1",
+          "order": 1,
+          "title": "What is a Variable?",
+          "video_file": "sample1.mp4",
+          "duration_seconds": 60,
+          "quiz_id": "alg-u1-q1"
+        },
+        {
+          "id": "alg-u1-v2",
+          "order": 2,
+          "title": "Evaluating Expressions",
+          "video_file": "sample2.mp4",
+          "duration_seconds": 90,
+          "quiz_id": "alg-u1-q2"
+        },
+        {
+          "id": "alg-u1-v3",
+          "order": 3,
+          "title": "Combining Like Terms",
+          "video_file": "sample3.mp4",
+          "duration_seconds": 45,
+          "quiz_id": "alg-u1-q3"
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Equations",
+      "video_lessons": [
+        {
+          "id": "alg-u2-v1",
+          "order": 1,
+          "title": "One-Step Equations",
+          "video_file": "sample1.mp4",
+          "duration_seconds": 60,
+          "quiz_id": "alg-u2-q1"
+        },
+        {
+          "id": "alg-u2-v2",
+          "order": 2,
+          "title": "Two-Step Equations",
+          "video_file": "sample2.mp4",
+          "duration_seconds": 90,
+          "quiz_id": "alg-u2-q2"
+        },
+        {
+          "id": "alg-u2-v3",
+          "order": 3,
+          "title": "Word Problems",
+          "video_file": "sample3.mp4",
+          "duration_seconds": 45,
+          "quiz_id": "alg-u2-q3"
+        }
+      ]
+    }
+  ]
+}

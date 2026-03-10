@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.auth.deps import get_current_user
@@ -23,13 +23,15 @@ def _get_content_loader(settings: Settings = Depends(get_settings)) -> ContentLo
 @router.get("/{lesson_id}", response_model=LessonOut)
 async def get_lesson(
     lesson_id: str,
+    request: Request,
     course_id: uuid.UUID = Query(..., description="Course ID for context"),
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
     content_loader: ContentLoader = Depends(_get_content_loader),
     settings: Settings = Depends(get_settings),
 ) -> LessonOut:
-    service = LessonService(db, content_loader, settings)
+    base_url = str(request.base_url).rstrip("/")
+    service = LessonService(db, content_loader, settings, base_url=base_url)
     return await service.get_lesson(lesson_id, course_id)
 
 

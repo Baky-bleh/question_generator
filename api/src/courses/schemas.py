@@ -15,6 +15,8 @@ class CourseOut(BaseModel):
     total_units: int
     thumbnail_url: str | None = None
     content_version: str
+    course_type: str = "language"
+    content_mode: str = "exercise"
 
     model_config = {"from_attributes": True}
 
@@ -30,7 +32,13 @@ class LessonSummaryOut(BaseModel):
     type: str
     status: str  # "locked" | "available" | "completed"
     best_score: int | None = None
-    exercise_count: int
+    exercise_count: int = 0
+    # Video lesson fields (only present for video_quiz courses)
+    duration_seconds: int | None = None
+    thumbnail_url: str | None = None
+    watch_percent: int | None = None
+    quiz_unlocked: bool | None = None
+    quiz_id: str | None = None
 
 
 class UnitOut(BaseModel):

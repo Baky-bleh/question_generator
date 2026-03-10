@@ -118,6 +118,7 @@ async def get_my_profile(
         avatar_url=user.avatar_url,
         timezone=user.timezone,
         daily_goal=user.daily_goal,
+        role=user.role,
         created_at=user.created_at,
     )
 
@@ -140,5 +141,6 @@ async def update_my_profile(
         avatar_url=user.avatar_url,
         timezone=user.timezone,
         daily_goal=user.daily_goal,
+        role=user.role,
         created_at=user.created_at,
     )

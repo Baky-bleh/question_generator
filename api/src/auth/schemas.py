@@ -36,6 +36,7 @@ class UserProfileResponse(BaseModel):
     avatar_url: str | None = None
     timezone: str
     daily_goal: int
+    role: str
     created_at: datetime
 
 

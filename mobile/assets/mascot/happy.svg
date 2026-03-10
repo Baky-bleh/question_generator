@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Linguo the Fox - Happy -->
+  <ellipse cx="60" cy="170" rx="35" ry="15" fill="#FF8C42" transform="rotate(-15, 60, 170)"/>
+  <ellipse cx="42" cy="165" rx="12" ry="8" fill="#FFFFFF" transform="rotate(-15, 42, 165)"/>
+  <ellipse cx="100" cy="150" rx="40" ry="35" fill="#FF8C42"/>
+  <ellipse cx="100" cy="155" rx="28" ry="25" fill="#FFD4A8"/>
+  <circle cx="100" cy="90" r="40" fill="#FF8C42"/>
+  <polygon points="68,60 58,20 88,50" fill="#FF8C42"/>
+  <polygon points="72,55 64,28 85,50" fill="#FFD4A8"/>
+  <polygon points="132,60 142,20 112,50" fill="#FF8C42"/>
+  <polygon points="128,55 136,28 115,50" fill="#FFD4A8"/>
+  <ellipse cx="100" cy="100" rx="30" ry="25" fill="#FFD4A8"/>
+  <!-- Happy eyes - squinting -->
+  <path d="M79,85 Q85,80 91,85" stroke="#3C3C3C" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M109,85 Q115,80 121,85" stroke="#3C3C3C" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <ellipse cx="100" cy="97" rx="5" ry="3.5" fill="#3C3C3C"/>
+  <!-- Big smile -->
+  <path d="M88,103 Q100,115 112,103" stroke="#3C3C3C" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Blush -->
+  <circle cx="75" cy="98" r="6" fill="#FFB3B3" opacity="0.5"/>
+  <circle cx="125" cy="98" r="6" fill="#FFB3B3" opacity="0.5"/>
+</svg>

@@ -1,0 +1,69 @@
+{
+  "id": "alg-u1-q1",
+  "title": "Quiz: What is a Variable?",
+  "exercises": [
+    {
+      "id": "alg-u1-q1-e1",
+      "type": "multiple_choice",
+      "prompt": "Which of the following is a variable?",
+      "choices": ["5", "x", "+", "="],
+      "correct_index": 1,
+      "explanation": "A variable is a letter that represents an unknown value."
+    },
+    {
+      "id": "alg-u1-q1-e2",
+      "type": "number_input",
+      "prompt": "If x = 5, what is x + 3?",
+      "correct_answer": 8,
+      "tolerance": 0,
+      "explanation": "Substitute 5 for x: 5 + 3 = 8"
+    },
+    {
+      "id": "alg-u1-q1-e3",
+      "type": "fill_blank",
+      "prompt": "The expression 2x means 2 ___ x",
+      "correct_answers": ["times", "multiplied by"],
+      "explanation": "In algebra, a number next to a variable means multiplication."
+    },
+    {
+      "id": "alg-u1-q1-e4",
+      "type": "multiple_choice",
+      "prompt": "In the expression 3y + 7, what is the coefficient of y?",
+      "choices": ["y", "3", "7", "10"],
+      "correct_index": 1,
+      "explanation": "The coefficient is the number multiplied by the variable. Here, 3 is multiplied by y."
+    },
+    {
+      "id": "alg-u1-q1-e5",
+      "type": "number_input",
+      "prompt": "If y = 4, what is 2y?",
+      "correct_answer": 8,
+      "tolerance": 0,
+      "explanation": "2y means 2 × y. Substitute 4: 2 × 4 = 8"
+    },
+    {
+      "id": "alg-u1-q1-e6",
+      "type": "multiple_choice",
+      "prompt": "Which expression represents 'a number increased by 5'?",
+      "choices": ["5x", "x - 5", "x + 5", "x / 5"],
+      "correct_index": 2,
+      "explanation": "'Increased by' means addition, so the expression is x + 5."
+    },
+    {
+      "id": "alg-u1-q1-e7",
+      "type": "number_input",
+      "prompt": "If a = 3 and b = 2, what is a + b?",
+      "correct_answer": 5,
+      "tolerance": 0,
+      "explanation": "Substitute a = 3 and b = 2: 3 + 2 = 5"
+    },
+    {
+      "id": "alg-u1-q1-e8",
+      "type": "multiple_choice",
+      "prompt": "Which of these is a constant, not a variable?",
+      "choices": ["x", "y", "7", "z"],
+      "correct_index": 2,
+      "explanation": "A constant is a fixed value. 7 is a number that doesn't change, while x, y, and z are variables."
+    }
+  ]
+}

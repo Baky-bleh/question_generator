@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Linguo the Fox - Sad -->
+  <ellipse cx="60" cy="175" rx="35" ry="15" fill="#FF8C42" transform="rotate(-25, 60, 175)"/>
+  <ellipse cx="42" cy="170" rx="12" ry="8" fill="#FFFFFF" transform="rotate(-25, 42, 170)"/>
+  <ellipse cx="100" cy="155" rx="40" ry="35" fill="#FF8C42"/>
+  <ellipse cx="100" cy="160" rx="28" ry="25" fill="#FFD4A8"/>
+  <circle cx="100" cy="95" r="40" fill="#FF8C42"/>
+  <!-- Droopy ears -->
+  <polygon points="68,65 50,30 85,55" fill="#FF8C42"/>
+  <polygon points="72,60 56,35 83,55" fill="#FFD4A8"/>
+  <polygon points="132,65 150,30 115,55" fill="#FF8C42"/>
+  <polygon points="128,60 144,35 117,55" fill="#FFD4A8"/>
+  <ellipse cx="100" cy="105" rx="30" ry="25" fill="#FFD4A8"/>
+  <!-- Sad eyes -->
+  <circle cx="85" cy="90" r="6" fill="#3C3C3C"/>
+  <circle cx="115" cy="90" r="6" fill="#3C3C3C"/>
+  <circle cx="87" cy="88" r="2" fill="#FFFFFF"/>
+  <circle cx="117" cy="88" r="2" fill="#FFFFFF"/>
+  <!-- Sad eyebrows -->
+  <path d="M78,80 Q85,76 92,80" stroke="#3C3C3C" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M108,80 Q115,76 122,80" stroke="#3C3C3C" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <ellipse cx="100" cy="102" rx="5" ry="3.5" fill="#3C3C3C"/>
+  <!-- Frown -->
+  <path d="M90,112 Q100,106 110,112" stroke="#3C3C3C" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Tear -->
+  <ellipse cx="80" cy="98" rx="2" ry="3" fill="#1CB0F6" opacity="0.6"/>
+</svg>

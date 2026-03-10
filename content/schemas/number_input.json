@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NumberInputExercise",
+  "type": "object",
+  "required": ["id", "type", "prompt", "correct_answer"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "type": { "const": "number_input" },
+    "prompt": { "type": "string", "minLength": 1 },
+    "correct_answer": { "type": "number" },
+    "tolerance": { "type": "number", "default": 0 },
+    "explanation": { "type": "string" }
+  }
+}

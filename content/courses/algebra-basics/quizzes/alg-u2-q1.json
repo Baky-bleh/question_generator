@@ -1,0 +1,69 @@
+{
+  "id": "alg-u2-q1",
+  "title": "Quiz: One-Step Equations",
+  "exercises": [
+    {
+      "id": "alg-u2-q1-e1",
+      "type": "number_input",
+      "prompt": "Solve for x: x + 7 = 12",
+      "correct_answer": 5,
+      "tolerance": 0,
+      "explanation": "Subtract 7 from both sides: x = 12 - 7 = 5"
+    },
+    {
+      "id": "alg-u2-q1-e2",
+      "type": "multiple_choice",
+      "prompt": "To solve x + 9 = 15, what operation do you perform on both sides?",
+      "choices": ["Add 9", "Subtract 9", "Multiply by 9", "Divide by 9"],
+      "correct_index": 1,
+      "explanation": "To isolate x, subtract 9 from both sides: x = 15 - 9 = 6"
+    },
+    {
+      "id": "alg-u2-q1-e3",
+      "type": "number_input",
+      "prompt": "Solve for x: x - 4 = 10",
+      "correct_answer": 14,
+      "tolerance": 0,
+      "explanation": "Add 4 to both sides: x = 10 + 4 = 14"
+    },
+    {
+      "id": "alg-u2-q1-e4",
+      "type": "number_input",
+      "prompt": "Solve for x: 3x = 21",
+      "correct_answer": 7,
+      "tolerance": 0,
+      "explanation": "Divide both sides by 3: x = 21 / 3 = 7"
+    },
+    {
+      "id": "alg-u2-q1-e5",
+      "type": "fill_blank",
+      "prompt": "To solve an equation, you must ___ the variable.",
+      "correct_answers": ["isolate"],
+      "explanation": "The goal is to get the variable alone on one side of the equation."
+    },
+    {
+      "id": "alg-u2-q1-e6",
+      "type": "number_input",
+      "prompt": "Solve for y: y / 4 = 3",
+      "correct_answer": 12,
+      "tolerance": 0,
+      "explanation": "Multiply both sides by 4: y = 3 × 4 = 12"
+    },
+    {
+      "id": "alg-u2-q1-e7",
+      "type": "multiple_choice",
+      "prompt": "Which equation has the solution x = 8?",
+      "choices": ["x + 8 = 0", "x - 3 = 5", "2x = 8", "x / 2 = 8"],
+      "correct_index": 1,
+      "explanation": "x - 3 = 5 → x = 5 + 3 = 8"
+    },
+    {
+      "id": "alg-u2-q1-e8",
+      "type": "number_input",
+      "prompt": "Solve for x: x + 15 = 15",
+      "correct_answer": 0,
+      "tolerance": 0,
+      "explanation": "Subtract 15 from both sides: x = 15 - 15 = 0"
+    }
+  ]
+}
