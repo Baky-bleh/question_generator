@@ -113,9 +113,11 @@ Get current user's profile.
     "avatar_url": "string | null",
     "timezone": "string",
     "daily_goal": 10,
+    "role": "string (student | teacher | admin)",
     "created_at": "datetime"
   }
   ```
+- **Notes**: `role` is read-only here. Role changes are admin-only via `PATCH /api/v1/admin/users/{user_id}`.
 
 ### `PATCH /api/v1/users/me`
 Update current user's profile. Partial update — only provided fields change.
@@ -130,6 +132,7 @@ Update current user's profile. Partial update — only provided fields change.
   }
   ```
 - **Response** `200` (`UserProfileResponse`): Same as GET response with updated values
+- **Notes**: The `role` field is **not updatable** via this endpoint. Role changes are admin-only.
 
 ---
 

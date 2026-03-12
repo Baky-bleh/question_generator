@@ -81,6 +81,7 @@ export function AuthForm({ mode, onSubmit, loading = false }: AuthFormProps) {
     <View style={{ gap: spacing.sm }}>
       {mode === 'signup' && (
         <Input
+          testID="signup-name-input"
           label="Display Name"
           placeholder="How should we call you?"
           value={displayName}
@@ -94,6 +95,7 @@ export function AuthForm({ mode, onSubmit, loading = false }: AuthFormProps) {
         />
       )}
       <Input
+        testID={`${mode}-email-input`}
         label="Email"
         placeholder="your@email.com"
         value={email}
@@ -110,6 +112,7 @@ export function AuthForm({ mode, onSubmit, loading = false }: AuthFormProps) {
         onSubmitEditing={() => passwordRef.current?.focus()}
       />
       <Input
+        testID={`${mode}-password-input`}
         label="Password"
         placeholder={mode === 'signup' ? 'Min. 8 characters' : 'Enter your password'}
         value={password}
@@ -153,6 +156,7 @@ export function AuthForm({ mode, onSubmit, loading = false }: AuthFormProps) {
       )}
       <View style={{ marginTop: spacing.md }}>
         <Button
+          testID={`${mode}-submit-button`}
           variant="primary"
           size="lg"
           onPress={handleSubmit}

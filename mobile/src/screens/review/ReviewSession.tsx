@@ -64,7 +64,7 @@ export function ReviewSession() {
   }
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
+    <SafeAreaView testID="review-screen" style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       <ScrollView
         contentContainerStyle={[styles.content, { padding: spacing.base }]}
         showsVerticalScrollIndicator={false}

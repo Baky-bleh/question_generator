@@ -60,7 +60,7 @@ export function HomeScreen() {
   const activeCourses = progressQuery.data?.courses ?? [];
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
+    <SafeAreaView testID="home-screen" style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       <ScrollView
         contentContainerStyle={[styles.content, { padding: spacing.base }]}
         refreshControl={
@@ -76,17 +76,17 @@ export function HomeScreen() {
         overScrollMode="never"
       >
         {/* Greeting Header */}
-        <Text style={[typography.heading2, { color: colors.text }]}>
+        <Text testID="home-greeting" style={[typography.heading2, { color: colors.text }]}>
           {greeting}!
         </Text>
 
         {/* Mascot Section */}
-        <View style={styles.mascotContainer}>
+        <View testID="home-mascot" style={styles.mascotContainer}>
           <Mascot state={mascotState} message={mascotMessage} size="lg" />
         </View>
 
         {/* Daily Progress Ring */}
-        <View style={{ marginTop: spacing.lg }}>
+        <View testID="home-daily-progress" style={{ marginTop: spacing.lg }}>
           <DailyProgress
             xpEarned={todayXP}
             goalMet={progressQuery.data?.today.goal_met ?? false}
@@ -95,7 +95,7 @@ export function HomeScreen() {
         </View>
 
         {/* Streak Widget */}
-        <View style={{ marginTop: spacing.base }}>
+        <View testID="home-streak-widget" style={{ marginTop: spacing.base }}>
           <StreakWidget
             current={streakData?.current ?? 0}
             todayCompleted={streakData?.today_completed ?? false}
@@ -105,6 +105,7 @@ export function HomeScreen() {
         {/* Continue Learning Button */}
         <View style={{ marginTop: spacing.lg }}>
           <Button
+            testID="home-continue-button"
             variant="primary"
             size="lg"
             fullWidth

@@ -8,16 +8,17 @@ import Animated, {
   withRepeat,
   withSequence,
   withTiming,
-  withSpring,
   Easing,
 } from 'react-native-reanimated';
 import { useTheme } from '@/theme';
 import { useProgressStore } from '@/stores/progressStore';
+import { triggerShake } from '@/utils/animations';
 import { VideoWatchRing } from '@/components/progress/VideoWatchRing';
 import type { LessonSummary } from '@lingualeap/types';
 
 interface VideoLessonNodeProps {
   lesson: LessonSummary;
+  testID?: string;
 }
 
 const CARD_WIDTH = 100;
@@ -29,7 +30,7 @@ function formatDuration(seconds: number): string {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
-export function VideoLessonNode({ lesson }: VideoLessonNodeProps) {
+export function VideoLessonNode({ lesson, testID }: VideoLessonNodeProps) {
   const { colors, typography, spacing, shadows } = useTheme();
   const router = useRouter();
   const courseId = useProgressStore((s) => s.currentCourseId);
@@ -60,12 +61,7 @@ export function VideoLessonNode({ lesson }: VideoLessonNodeProps) {
 
   const handlePress = () => {
     if (isLocked) {
-      shakeX.value = withSequence(
-        withSpring(-8, { damping: 2, stiffness: 400 }),
-        withSpring(8, { damping: 2, stiffness: 400 }),
-        withSpring(-4, { damping: 2, stiffness: 400 }),
-        withSpring(0, { damping: 2, stiffness: 400 }),
-      );
+      triggerShake(shakeX);
       return;
     }
     router.push(`/(video)/${lesson.id}?courseId=${courseId}`);
@@ -93,7 +89,7 @@ export function VideoLessonNode({ lesson }: VideoLessonNodeProps) {
   }
 
   return (
-    <Animated.View style={[styles.wrapper, animatedStyle]}>
+    <Animated.View testID={testID} style={[styles.wrapper, animatedStyle]}>
       <Animated.View
         style={[
           styles.card,

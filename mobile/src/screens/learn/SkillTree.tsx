@@ -33,7 +33,7 @@ export function SkillTree() {
   }, [currentUnitIndex]);
 
   const renderUnit = useCallback(
-    ({ item }: { item: Unit }) => <UnitCard unit={item} />,
+    ({ item, index }: { item: Unit; index: number }) => <UnitCard unit={item} testID={`unit-card-${index}`} />,
     [],
   );
 
@@ -59,7 +59,7 @@ export function SkillTree() {
   }
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
+    <SafeAreaView testID="skill-tree-screen" style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       {/* Course Header */}
       <View style={[styles.header, { padding: spacing.base, borderBottomColor: colors.borderLight }]}>
         <Text style={[typography.heading2, { color: colors.text }]}>

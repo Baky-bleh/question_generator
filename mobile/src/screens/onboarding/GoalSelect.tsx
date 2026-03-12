@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme';
 import { Button, Card } from '@/components/ui';
 import { useSettingsStore } from '@/stores/settingsStore';
+import { useProgressStore } from '@/stores/progressStore';
 import { useUpdateUserMutation } from '@/hooks/queries/useUser';
 import { Mascot } from '@/components/mascot';
 
@@ -25,19 +26,37 @@ export default function GoalSelect() {
   const { colors, typography, spacing } = useTheme();
   const router = useRouter();
   const completeOnboarding = useSettingsStore((s) => s.completeOnboarding);
+  const selectedLanguage = useSettingsStore((s) => s.selectedLanguageTo);
+  const setDailyGoal = useProgressStore((s) => s.setDailyGoal);
   const updateUser = useUpdateUserMutation();
   const [selected, setSelected] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const isMath = selectedLanguage?.startsWith('math') ?? false;
+
+  // Math users skip this screen entirely -- set default and redirect
+  useEffect(() => {
+    if (isMath) {
+      setDailyGoal(1);
+      updateUser.mutateAsync({ daily_goal: 1 }).catch(() => {
+        // Ignore API errors for default goal
+      });
+      completeOnboarding();
+      router.replace('/(tabs)/home');
+    }
+  }, [isMath]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function handleContinue() {
     if (selected === null) return;
     setLoading(true);
     try {
       await updateUser.mutateAsync({ daily_goal: selected });
+      setDailyGoal(selected);
       completeOnboarding();
       router.replace('/(tabs)/home');
     } catch {
       // If the API call fails, still complete onboarding locally
+      setDailyGoal(selected);
       completeOnboarding();
       router.replace('/(tabs)/home');
     } finally {
@@ -45,8 +64,13 @@ export default function GoalSelect() {
     }
   }
 
+  // Don't render goal selection for math users
+  if (isMath) {
+    return null;
+  }
+
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView testID="onboarding-goal-screen" style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={[styles.header, { padding: spacing.lg }]}>
         <Mascot state="teaching" size="sm" />
         <Text
@@ -73,6 +97,7 @@ export default function GoalSelect() {
           return (
             <Card
               key={option.minutes}
+              testID={`goal-${option.label.toLowerCase()}-option`}
               variant="outlined"
               padding="lg"
               onPress={() => setSelected(option.minutes)}

@@ -96,23 +96,23 @@ function LessonContent({
   }
 
   return (
-    <SafeAreaView style={[styles.fullContainer, { backgroundColor: colors.background }]}>
+    <SafeAreaView testID="exercise-screen" style={[styles.fullContainer, { backgroundColor: colors.background }]}>
       {/* Header: progress bar + hearts + close */}
       <View style={styles.header}>
-        <Button variant="ghost" onPress={handleClose}>
+        <Button testID="lesson-close-button" variant="ghost" onPress={handleClose}>
           X
         </Button>
         <View style={styles.progressContainer}>
-          <LessonProgressBar
+          <LessonProgressBar testID="lesson-progress-bar"
             current={player.currentIndex + (player.phase === "feedback" ? 1 : 0)}
             total={player.totalExercises}
           />
         </View>
-        <HeartsDisplay count={player.heartsCount} />
+        <HeartsDisplay testID="hearts-display" count={player.heartsCount} />
       </View>
 
       {/* Exercise area */}
-      <View style={styles.exerciseArea}>
+      <View testID="exercise-renderer" style={styles.exerciseArea}>
         {player.currentExercise && (
           <ExerciseTransition key={player.currentIndex}>
             <ExerciseRenderer

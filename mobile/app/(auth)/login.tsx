@@ -81,7 +81,7 @@ export default function LoginScreen() {
   }
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView testID="login-screen" style={[styles.container, { backgroundColor: colors.background }]}>
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -94,7 +94,7 @@ export default function LoginScreen() {
           bounces={Platform.OS === 'ios'}
         >
           <View style={styles.mascotContainer}>
-            <Mascot state="waving" size="sm" />
+            <Mascot testID="login-mascot" state="waving" size="sm" />
           </View>
 
           <View style={styles.header}>
@@ -113,6 +113,7 @@ export default function LoginScreen() {
 
           {error && (
             <View
+              testID="login-error-banner"
               style={[
                 styles.errorBanner,
                 { backgroundColor: colors.errorLight, marginTop: spacing.base },
@@ -147,7 +148,7 @@ export default function LoginScreen() {
               {"Don't have an account? "}
             </Text>
             <Link href="/(auth)/signup" asChild>
-              <Text style={StyleSheet.flatten([typography.button, { color: colors.primary }])}>Sign Up</Text>
+              <Text testID="login-signup-link" style={StyleSheet.flatten([typography.button, { color: colors.primary }])}>Sign Up</Text>
             </Link>
           </View>
         </ScrollView>

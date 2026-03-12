@@ -59,7 +59,7 @@ export function VideoPlayer({
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.text }]}>
+    <View testID="video-player" style={[styles.container, { backgroundColor: colors.text }]}>
       <Video
         ref={videoRef}
         source={{ uri: videoUrl }}

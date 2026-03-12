@@ -29,6 +29,7 @@ export function AnswerFeedback({
 
   return (
     <Animated.View
+      testID="answer-feedback"
       entering={SlideInDown.springify().damping(18)}
       style={[styles.container, { backgroundColor: bgColor, borderTopColor: accentColor }]}
     >
@@ -64,6 +65,7 @@ export function AnswerFeedback({
         </View>
 
         <Button
+          testID="feedback-continue-button"
           variant={correct ? "primary" : "outline"}
           size="lg"
           fullWidth

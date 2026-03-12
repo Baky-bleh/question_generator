@@ -32,6 +32,7 @@ export default function TabsLayout() {
         name="home"
         options={{
           title: 'Home',
+          tabBarTestID: 'tab-home',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
           ),
@@ -41,6 +42,7 @@ export default function TabsLayout() {
         name="learn"
         options={{
           title: 'Learn',
+          tabBarTestID: 'tab-learn',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="book" size={size} color={color} />
           ),
@@ -50,6 +52,7 @@ export default function TabsLayout() {
         name="profile"
         options={{
           title: 'Profile',
+          tabBarTestID: 'tab-profile',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),
@@ -75,6 +78,7 @@ export default function TabsLayout() {
         name="review"
         options={{
           title: 'Review',
+          tabBarTestID: 'tab-review',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="refresh" size={size} color={color} />
           ),

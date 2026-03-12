@@ -40,6 +40,7 @@ export function MultipleChoice({ exercise, onAnswer, disabled }: ExerciseCompone
           return (
             <OptionCard
               key={index}
+              testID={`mc-option-${index}`}
               text={choice}
               isSelected={isSelected}
               disabled={disabled}
@@ -51,6 +52,7 @@ export function MultipleChoice({ exercise, onAnswer, disabled }: ExerciseCompone
 
       <View style={styles.submitArea}>
         <Button
+          testID="exercise-check-button"
           variant="primary"
           size="lg"
           fullWidth
@@ -69,11 +71,13 @@ function OptionCard({
   isSelected,
   disabled,
   onPress,
+  testID,
 }: {
   text: string;
   isSelected: boolean;
   disabled: boolean;
   onPress: () => void;
+  testID?: string;
 }) {
   const { colors, typography, spacing } = useTheme();
   const scale = useSharedValue(1);
@@ -92,7 +96,7 @@ function OptionCard({
   };
 
   return (
-    <Animated.View style={animatedStyle}>
+    <Animated.View testID={testID} style={animatedStyle}>
       <Card
         variant="outlined"
         padding="md"

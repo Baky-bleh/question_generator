@@ -46,7 +46,7 @@ export function ProfileScreen() {
   const memberSince = useMemo(() => formatMemberSince(user?.created_at), [user?.created_at]);
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
+    <SafeAreaView testID="profile-screen" style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       <ScrollView
         contentContainerStyle={[styles.content, { padding: spacing.base }]}
         showsVerticalScrollIndicator={false}
@@ -65,7 +65,7 @@ export function ProfileScreen() {
               {initials}
             </Text>
           </View>
-          <Text style={[typography.heading2, { color: colors.text, marginTop: spacing.md }]}>
+          <Text testID="profile-display-name" style={[typography.heading2, { color: colors.text, marginTop: spacing.md }]}>
             {user?.display_name ?? 'Loading...'}
           </Text>
           <Text style={[typography.bodySmall, { color: colors.textSecondary, marginTop: spacing.xs }]}>
@@ -80,12 +80,12 @@ export function ProfileScreen() {
 
         {/* XP + Level badges */}
         <View style={[styles.badgeRow, { marginTop: spacing.lg, gap: spacing.base }]}>
-          <XPBadge xp={totalXP} />
-          <LevelIndicator level={level} totalXP={totalXP} />
+          <XPBadge testID="profile-xp-badge" xp={totalXP} />
+          <LevelIndicator testID="profile-level-indicator" level={level} totalXP={totalXP} />
         </View>
 
         {/* Quick Stats Grid */}
-        <View style={[styles.statsGrid, { marginTop: spacing.lg, gap: spacing.sm }]}>
+        <View testID="profile-stats" style={[styles.statsGrid, { marginTop: spacing.lg, gap: spacing.sm }]}>
           <Card variant="elevated" padding="md" style={styles.statCard}>
             <Ionicons name="star" size={24} color={colors.xpGold} />
             <Text style={[typography.heading3, { color: colors.text, marginTop: spacing.xs }]}>
@@ -167,6 +167,7 @@ export function ProfileScreen() {
         {/* Settings button */}
         <View style={{ marginTop: spacing.xl }}>
           <Button
+            testID="profile-settings-button"
             variant="outline"
             fullWidth
             onPress={() => router.push('/(tabs)/settings')}

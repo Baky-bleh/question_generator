@@ -40,7 +40,7 @@ export default function SignupScreen() {
   }
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView testID="signup-screen" style={[styles.container, { backgroundColor: colors.background }]}>
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -72,6 +72,7 @@ export default function SignupScreen() {
 
           {error && (
             <View
+              testID="signup-error-banner"
               style={[
                 styles.errorBanner,
                 { backgroundColor: colors.errorLight, marginTop: spacing.base },
@@ -92,7 +93,7 @@ export default function SignupScreen() {
               Already have an account?{' '}
             </Text>
             <Link href="/(auth)/login" asChild>
-              <Text style={StyleSheet.flatten([typography.button, { color: colors.primary }])}>Log In</Text>
+              <Text testID="signup-login-link" style={StyleSheet.flatten([typography.button, { color: colors.primary }])}>Log In</Text>
             </Link>
           </View>
         </ScrollView>

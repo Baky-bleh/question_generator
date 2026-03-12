@@ -34,14 +34,14 @@
       "expo-secure-store",
       "expo-web-browser",
       "expo-image",
-      "expo-sqlite",
       [
         "expo-image-picker",
         {
           "photosPermission": "Allow LinguaLeap to access your photos to upload videos.",
           "cameraPermission": false
         }
-      ]
+      ],
+      "@config-plugins/detox"
     ]
   }
 }

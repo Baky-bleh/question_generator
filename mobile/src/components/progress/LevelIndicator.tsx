@@ -6,6 +6,7 @@ import { useTheme } from '@/theme';
 interface LevelIndicatorProps {
   level: number;
   totalXP: number;
+  testID?: string;
 }
 
 const RING_SIZE = 56;
@@ -13,7 +14,7 @@ const STROKE_WIDTH = 4;
 const RADIUS = (RING_SIZE - STROKE_WIDTH) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-export function LevelIndicator({ level, totalXP }: LevelIndicatorProps) {
+export function LevelIndicator({ level, totalXP, testID }: LevelIndicatorProps) {
   const { colors, typography } = useTheme();
 
   // Progress within current level: XP % 100 / 100
@@ -21,7 +22,7 @@ export function LevelIndicator({ level, totalXP }: LevelIndicatorProps) {
   const offset = CIRCUMFERENCE * (1 - progressInLevel);
 
   return (
-    <View style={styles.container}>
+    <View testID={testID} style={styles.container}>
       <Svg width={RING_SIZE} height={RING_SIZE}>
         <Circle
           cx={RING_SIZE / 2}

@@ -23,7 +23,7 @@ export function LessonIntro({
   const { colors, typography, spacing } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View testID="lesson-intro-screen" style={styles.container}>
       <TouchableOpacity onPress={onClose} style={styles.closeButton}>
         <Ionicons name="close" size={28} color={colors.textSecondary} />
       </TouchableOpacity>
@@ -31,14 +31,14 @@ export function LessonIntro({
       <View style={styles.content}>
         <Mascot state="teaching" size="lg" message="Let me show you something new!" />
 
-        <Text style={[typography.heading2, { color: colors.text, textAlign: "center", marginTop: spacing.lg }]}>
+        <Text testID="lesson-intro-title" style={[typography.heading2, { color: colors.text, textAlign: "center", marginTop: spacing.lg }]}>
           {title}
         </Text>
 
         <View style={styles.infoRow}>
           <View style={styles.infoPill}>
             <Ionicons name="book-outline" size={16} color={colors.textSecondary} />
-            <Text style={[typography.bodySmall, { color: colors.textSecondary, marginLeft: 4 }]}>
+            <Text testID="lesson-intro-exercise-count" style={[typography.bodySmall, { color: colors.textSecondary, marginLeft: 4 }]}>
               {exerciseCount} exercises
             </Text>
           </View>
@@ -52,7 +52,7 @@ export function LessonIntro({
       </View>
 
       <View style={styles.footer}>
-        <Button variant="primary" size="lg" fullWidth onPress={onStart}>
+        <Button testID="lesson-intro-start-button" variant="primary" size="lg" fullWidth onPress={onStart}>
           Start Lesson
         </Button>
       </View>

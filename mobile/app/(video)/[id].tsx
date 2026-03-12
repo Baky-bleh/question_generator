@@ -65,7 +65,7 @@ export default function VideoLessonScreen() {
   }
 
   return (
-    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+    <View testID="video-lesson-screen" style={[styles.screen, { backgroundColor: colors.background }]}>
       {/* Back button */}
       <View
         style={[
@@ -74,6 +74,7 @@ export default function VideoLessonScreen() {
         ]}
       >
         <TouchableOpacity
+          testID="video-back-button"
           onPress={() => router.back()}
           style={styles.backButton}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
@@ -107,7 +108,7 @@ export default function VideoLessonScreen() {
       >
         {/* Title and description */}
         <View style={[styles.infoSection, { padding: spacing.md }]}>
-          <Text style={[typography.heading2, { color: colors.text }]}>
+          <Text testID="video-lesson-title" style={[typography.heading2, { color: colors.text }]}>
             {videoLesson.title}
           </Text>
 
@@ -119,6 +120,7 @@ export default function VideoLessonScreen() {
                 color={colors.textSecondary}
               />
               <Text
+                testID="video-teacher-name"
                 style={[
                   typography.bodySmall,
                   { color: colors.textSecondary, marginLeft: spacing.xs },

@@ -8,19 +8,20 @@ import Animated, {
   withRepeat,
   withSequence,
   withTiming,
-  withSpring,
   Easing,
 } from 'react-native-reanimated';
 import { useTheme } from '@/theme';
+import { triggerShake } from '@/utils/animations';
 import type { LessonSummary } from '@lingualeap/types';
 
 interface LessonNodeProps {
   lesson: LessonSummary;
+  testID?: string;
 }
 
 const NODE_SIZE = 64;
 
-export function LessonNode({ lesson }: LessonNodeProps) {
+export function LessonNode({ lesson, testID }: LessonNodeProps) {
   const { colors, shadows } = useTheme();
   const router = useRouter();
 
@@ -47,13 +48,7 @@ export function LessonNode({ lesson }: LessonNodeProps) {
 
   const handlePress = () => {
     if (isLocked) {
-      // Shake animation for locked nodes
-      shakeX.value = withSequence(
-        withSpring(-8, { damping: 2, stiffness: 400 }),
-        withSpring(8, { damping: 2, stiffness: 400 }),
-        withSpring(-4, { damping: 2, stiffness: 400 }),
-        withSpring(0, { damping: 2, stiffness: 400 }),
-      );
+      triggerShake(shakeX);
       return;
     }
     router.push(`/(lesson)/${lesson.id}`);
@@ -85,7 +80,7 @@ export function LessonNode({ lesson }: LessonNodeProps) {
   }
 
   return (
-    <Animated.View style={[styles.wrapper, animatedStyle]}>
+    <Animated.View testID={testID} style={[styles.wrapper, animatedStyle]}>
       <Animated.View
         style={[
           styles.node,

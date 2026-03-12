@@ -23,6 +23,9 @@ const storage = {
   },
 };
 
+type MathGoal = "fundamentals" | "sat" | "olympiad" | "class";
+type MathLevel = string;
+
 interface SettingsState {
   theme: "light" | "dark" | "system";
   notificationsEnabled: boolean;
@@ -30,12 +33,16 @@ interface SettingsState {
   hapticEnabled: boolean;
   hasCompletedOnboarding: boolean;
   selectedLanguageTo: string | null;
+  mathGoal: MathGoal | null;
+  mathLevel: MathLevel | null;
   setTheme: (theme: "light" | "dark" | "system") => void;
   toggleNotifications: () => void;
   toggleSound: () => void;
   toggleHaptic: () => void;
   completeOnboarding: () => void;
   setLanguage: (lang: string) => void;
+  setMathGoal: (goal: MathGoal) => void;
+  setMathLevel: (level: MathLevel) => void;
   hydrate: () => Promise<void>;
 }
 
@@ -47,8 +54,25 @@ function persistSettings(state: Partial<SettingsState>) {
     hapticEnabled: state.hapticEnabled,
     hasCompletedOnboarding: state.hasCompletedOnboarding,
     selectedLanguageTo: state.selectedLanguageTo,
+    mathGoal: state.mathGoal,
+    mathLevel: state.mathLevel,
   };
   storage.setItem(SETTINGS_KEY, JSON.stringify(toSave));
+}
+
+/** Set partial state and persist only if a value actually changed. */
+function updateAndPersist(
+  set: (partial: Partial<SettingsState>) => void,
+  get: () => SettingsState,
+  partial: Partial<SettingsState>,
+) {
+  const current = get();
+  const changed = Object.entries(partial).some(
+    ([k, v]) => current[k as keyof SettingsState] !== v,
+  );
+  if (!changed) return;
+  set(partial);
+  persistSettings({ ...get(), ...partial });
 }
 
 export const useSettingsStore = create<SettingsState>((set, get) => ({
@@ -58,39 +82,30 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   hapticEnabled: true,
   hasCompletedOnboarding: false,
   selectedLanguageTo: null,
+  mathGoal: null,
+  mathLevel: null,
 
-  setTheme: (theme) => {
-    set({ theme });
-    persistSettings({ ...get(), theme });
-  },
+  setTheme: (theme) => updateAndPersist(set, get, { theme }),
 
   toggleNotifications: () => {
-    const next = !get().notificationsEnabled;
-    set({ notificationsEnabled: next });
-    persistSettings({ ...get(), notificationsEnabled: next });
+    updateAndPersist(set, get, { notificationsEnabled: !get().notificationsEnabled });
   },
 
   toggleSound: () => {
-    const next = !get().soundEnabled;
-    set({ soundEnabled: next });
-    persistSettings({ ...get(), soundEnabled: next });
+    updateAndPersist(set, get, { soundEnabled: !get().soundEnabled });
   },
 
   toggleHaptic: () => {
-    const next = !get().hapticEnabled;
-    set({ hapticEnabled: next });
-    persistSettings({ ...get(), hapticEnabled: next });
+    updateAndPersist(set, get, { hapticEnabled: !get().hapticEnabled });
   },
 
-  completeOnboarding: () => {
-    set({ hasCompletedOnboarding: true });
-    persistSettings({ ...get(), hasCompletedOnboarding: true });
-  },
+  completeOnboarding: () => updateAndPersist(set, get, { hasCompletedOnboarding: true }),
 
-  setLanguage: (lang) => {
-    set({ selectedLanguageTo: lang });
-    persistSettings({ ...get(), selectedLanguageTo: lang });
-  },
+  setLanguage: (lang) => updateAndPersist(set, get, { selectedLanguageTo: lang }),
+
+  setMathGoal: (goal) => updateAndPersist(set, get, { mathGoal: goal }),
+
+  setMathLevel: (level) => updateAndPersist(set, get, { mathLevel: level }),
 
   hydrate: async () => {
     try {

@@ -5,13 +5,14 @@ import { useTheme } from '@/theme';
 
 interface XPBadgeProps {
   xp: number;
+  testID?: string;
 }
 
-export function XPBadge({ xp }: XPBadgeProps) {
+export function XPBadge({ xp, testID }: XPBadgeProps) {
   const { colors, typography } = useTheme();
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.warningLight, borderColor: colors.xpGold }]}>
+    <View testID={testID} style={[styles.container, { backgroundColor: colors.warningLight, borderColor: colors.xpGold }]}>
       <Ionicons name="star" size={18} color={colors.xpGold} />
       <Text style={[typography.label, { color: colors.xpGold, marginLeft: 4 }]}>
         {xp.toLocaleString()} XP

@@ -55,6 +55,7 @@ export function SocialLoginButtons({
   return (
     <View style={{ gap: spacing.md }}>
       <Button
+        testID="google-login-button"
         variant="outline"
         size="lg"
         onPress={handleGoogleLogin}
@@ -66,6 +67,7 @@ export function SocialLoginButtons({
       </Button>
       {Platform.OS === 'ios' && (
         <Button
+          testID="apple-login-button"
           variant="outline"
           size="lg"
           onPress={handleAppleLogin}

@@ -11,10 +11,10 @@ export default function Welcome() {
   const router = useRouter();
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView testID="onboarding-welcome-screen" style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.content}>
         <View style={styles.mascotSection}>
-          <Mascot state="celebrating" size="lg" />
+          <Mascot testID="onboarding-mascot" state="celebrating" size="lg" />
         </View>
 
         <View style={styles.textSection}>
@@ -38,6 +38,7 @@ export default function Welcome() {
 
         <View style={[styles.buttonSection, { paddingHorizontal: spacing.lg }]}>
           <Button
+            testID="onboarding-get-started-button"
             variant="primary"
             size="lg"
             onPress={() => router.push('/(onboarding)/language')}

@@ -33,6 +33,7 @@ export function NumberInput({ exercise, onAnswer, disabled }: ExerciseComponentP
       <View style={styles.inputArea}>
         <View style={styles.inputRow}>
           <TextInput
+            testID="number-input-field"
             style={[
               styles.textInput,
               {
@@ -65,6 +66,7 @@ export function NumberInput({ exercise, onAnswer, disabled }: ExerciseComponentP
         </View>
 
         <Button
+          testID="exercise-check-button"
           variant="primary"
           size="lg"
           fullWidth

@@ -50,6 +50,7 @@ export function FillBlank({ exercise, onAnswer, disabled }: ExerciseComponentPro
 
       <View style={styles.inputArea}>
         <Input
+          testID="fill-blank-input"
           placeholder="Type your answer..."
           value={answer}
           onChangeText={setAnswer}
@@ -59,6 +60,7 @@ export function FillBlank({ exercise, onAnswer, disabled }: ExerciseComponentPro
           disabled={disabled}
         />
         <Button
+          testID="exercise-check-button"
           variant="primary"
           size="lg"
           fullWidth

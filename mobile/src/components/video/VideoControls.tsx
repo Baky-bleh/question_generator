@@ -136,11 +136,13 @@ export function VideoControls({
           {/* Center play/pause button */}
           <View style={styles.centerArea}>
             <TouchableOpacity
+              testID="video-play-pause-button"
               onPress={handlePlayPause}
               style={styles.playButton}
               activeOpacity={0.7}
             >
               <Ionicons
+                testID={isPlaying ? "video-playing-indicator" : "video-paused-indicator"}
                 name={isPlaying ? "pause" : "play"}
                 size={48}
                 color="#FFFFFF"
@@ -152,6 +154,7 @@ export function VideoControls({
           <View style={styles.bottomBar}>
             <Text style={styles.timeText}>{formatTime(positionSeconds)}</Text>
             <Slider
+              testID="video-progress-indicator"
               style={styles.slider}
               minimumValue={0}
               maximumValue={durationSeconds > 0 ? durationSeconds : 1}
@@ -163,7 +166,7 @@ export function VideoControls({
               thumbTintColor="#FFFFFF"
             />
             <Text style={styles.timeText}>{formatTime(durationSeconds)}</Text>
-            <TouchableOpacity onPress={handleSpeedPress} style={styles.speedButton}>
+            <TouchableOpacity testID="video-speed-button" onPress={handleSpeedPress} style={styles.speedButton}>
               <Text style={styles.speedText}>{playbackSpeed}x</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleFullscreenPress} style={styles.iconButton}>

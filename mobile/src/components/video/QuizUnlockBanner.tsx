@@ -55,7 +55,7 @@ export function QuizUnlockBanner({
 
   const handleTakeQuiz = () => {
     router.push(
-      `/(video)/quiz?videoLessonId=${videoLessonId}&courseId=${courseId}` as never,
+      `/(video)/quiz?videoLessonId=${videoLessonId}&courseId=${courseId}&quizId=${quizId}` as never,
     );
   };
 
@@ -63,6 +63,7 @@ export function QuizUnlockBanner({
 
   return (
     <Animated.View
+      testID="quiz-unlock-banner"
       style={[
         styles.container,
         {
@@ -97,6 +98,7 @@ export function QuizUnlockBanner({
               {quizId && (
                 <View style={{ marginTop: spacing.sm }}>
                   <Button
+                    testID="quiz-unlocked-button"
                     variant="primary"
                     size="sm"
                     onPress={handleTakeQuiz}
@@ -109,6 +111,7 @@ export function QuizUnlockBanner({
           ) : (
             <>
               <Text
+                testID="quiz-locked-indicator"
                 style={[
                   typography.body,
                   { color: colors.text, marginBottom: spacing.xs },
@@ -120,7 +123,7 @@ export function QuizUnlockBanner({
                 progress={progressFraction}
                 style={{ marginBottom: spacing.xs }}
               />
-              <Text style={[typography.bodySmall, { color: colors.textSecondary }]}>
+              <Text testID="quiz-threshold-text" style={[typography.bodySmall, { color: colors.textSecondary }]}>
                 {watchPercent}% watched
               </Text>
             </>

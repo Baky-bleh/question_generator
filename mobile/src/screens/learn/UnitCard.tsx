@@ -8,9 +8,10 @@ import type { Unit } from '@lingualeap/types';
 
 interface UnitCardProps {
   unit: Unit;
+  testID?: string;
 }
 
-export function UnitCard({ unit }: UnitCardProps) {
+export function UnitCard({ unit, testID }: UnitCardProps) {
   const { colors, typography, spacing, shadows } = useTheme();
   const [expanded, setExpanded] = useState(true);
 
@@ -18,7 +19,7 @@ export function UnitCard({ unit }: UnitCardProps) {
   const totalCount = unit.lessons.length;
 
   return (
-    <View style={[styles.container, { marginBottom: spacing.lg }]}>
+    <View testID={testID} style={[styles.container, { marginBottom: spacing.lg }]}>
       {/* Expandable Header */}
       <TouchableOpacity
         style={[
@@ -66,11 +67,11 @@ export function UnitCard({ unit }: UnitCardProps) {
       {/* Lesson Nodes */}
       {expanded && (
         <View style={[styles.lessonsGrid, { gap: spacing.md, paddingTop: spacing.md }]}>
-          {unit.lessons.map((lesson) =>
+          {unit.lessons.map((lesson, index) =>
             lesson.type === 'video' ? (
-              <VideoLessonNode key={lesson.id} lesson={lesson} />
+              <VideoLessonNode key={lesson.id} lesson={lesson} testID={`video-lesson-node-${index}`} />
             ) : (
-              <LessonNode key={lesson.id} lesson={lesson} />
+              <LessonNode key={lesson.id} lesson={lesson} testID={`lesson-node-${index}`} />
             ),
           )}
         </View>

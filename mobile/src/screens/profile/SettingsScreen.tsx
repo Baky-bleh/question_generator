@@ -37,7 +37,7 @@ export function SettingsScreen() {
   ];
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
+    <SafeAreaView testID="settings-screen" style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       <ScrollView
         contentContainerStyle={[styles.content, { padding: spacing.base }]}
         showsVerticalScrollIndicator={false}

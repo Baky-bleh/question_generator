@@ -6,13 +6,14 @@ import { useTheme } from "@/theme";
 interface HeartsDisplayProps {
   count: number;
   unlimited?: boolean;
+  testID?: string;
 }
 
-export function HeartsDisplay({ count, unlimited = false }: HeartsDisplayProps) {
+export function HeartsDisplay({ count, unlimited = false, testID }: HeartsDisplayProps) {
   const { colors, typography } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View testID={testID} style={styles.container}>
       <Ionicons name="heart" size={20} color={colors.error} />
       <Text style={[typography.label, { color: colors.error, marginLeft: 4 }]}>
         {unlimited ? "\u221E" : count}

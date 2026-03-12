@@ -67,14 +67,14 @@ export function LessonResults({
   const seconds = elapsedTime % 60;
 
   return (
-    <View style={styles.container}>
+    <View testID="lesson-results-screen" style={styles.container}>
       <View style={styles.content}>
         <Mascot state={mascotState} size="lg" message={mascotMessage} />
 
         <Animated.View entering={FadeInUp.delay(300)} style={styles.xpSection}>
           <Text style={[typography.caption, { color: colors.textSecondary }]}>XP Earned</Text>
           <Animated.View style={xpAnimatedStyle}>
-            <Text style={[typography.heading1, { color: colors.xpGold }]}>
+            <Text testID="results-xp-earned" style={[typography.heading1, { color: colors.xpGold }]}>
               +{xpEarned}
             </Text>
           </Animated.View>
@@ -109,7 +109,7 @@ export function LessonResults({
       </View>
 
       <View style={styles.footer}>
-        <Button variant="primary" size="lg" fullWidth onPress={onContinue}>
+        <Button testID="results-continue-button" variant="primary" size="lg" fullWidth onPress={onContinue}>
           Continue
         </Button>
       </View>
