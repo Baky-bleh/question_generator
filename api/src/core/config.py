@@ -13,8 +13,8 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = "postgresql+asyncpg://lingualeap:lingualeap@localhost:5432/lingualeap"
 
-    # Redis
-    REDIS_URL: str = "redis://localhost:6379/0"
+    # Redis (leave empty to run without Redis)
+    REDIS_URL: str = ""
 
     # JWT
     JWT_SECRET_KEY: str = "change-me-in-production"
